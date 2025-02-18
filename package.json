@@ -2,7 +2,7 @@
   "name": "read-y",
   "version": "1.0.0",
   "description": "personal teading eeb page",
-  "main": "index.ejs",
+  "main": "home.ejs",
   "scripts": {
     "start": "node app.js",
     "dev": "nodemon app.js"
