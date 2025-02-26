@@ -1,3 +1,47 @@
 <% include('../layout', { title: 'Reading' }) %>
 
-<h2>READING</h2>
+  <% include partials/navbar.ejs %>
+
+  <div class="reading-container">
+    <!-- Title / info about book -->
+    <header class="reading-header">
+      <h1>Reading: <%= fileId %></h1>
+      <button id="editBtn" class="edit-btn">Edit this file</button>
+    </header>
+
+    <!-- UI switching themes -->
+    <div class="theme-switcher">
+      <label for="themeSelect">Theme:</label>
+      <select id="themeSelect">
+        <option value="light">Light</option>
+        <option value="sepia">Sepia</option>
+        <option value="dark">Dark</option>
+      </select>
+    </div>
+
+    <!-- Conteiner for PDF (can use iframe, PDF.js, embed e.t.c) -->
+    <div class="pdf-viewer">
+      <iframe
+        src="/uploads/<%= fileId %>.pdf"
+        width="600"
+        height="800"
+        id="pdfIframe"
+      ></iframe>
+    </div>
+
+    <!-- Block notes -->
+    <div class="notes-section">
+      <h2>My Notes</h2>
+      <ul id="notesList">
+        <!-- Then JS will load or render notes -->
+      </ul>
+      <!-- Fold for additions new notes -->
+      <textarea id="newNoteText" placeholder="Write your note..."></textarea>
+      <button id="saveNoteBtn">Save note</button>
+    </div>
+
+    <!-- Blinker -->
+    <div id="blinker" class="blinker">BLINK</div>
+  </div>
+
+  <% include partials/footer.ejs %>
