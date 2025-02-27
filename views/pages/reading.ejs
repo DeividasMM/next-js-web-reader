@@ -1,47 +1,36 @@
-<% include('../layout', { title: 'Reading' }) %>
+<div>
 
-  <% include partials/navbar.ejs %>
+  <header>
+    <h1>Reading:</h1>
+    <button< /button>
+  </header>
 
-  <div class="reading-container">
-    <!-- Title / info about book -->
-    <header class="reading-header">
-      <h1>Reading: <%= fileId %></h1>
-      <button id="editBtn" class="edit-btn">Edit this file</button>
-    </header>
-
-    <!-- UI switching themes -->
-    <div class="theme-switcher">
-      <label for="themeSelect">Theme:</label>
-      <select id="themeSelect">
-        <option value="light">Light</option>
-        <option value="sepia">Sepia</option>
-        <option value="dark">Dark</option>
-      </select>
-    </div>
-
-    <!-- Conteiner for PDF (can use iframe, PDF.js, embed e.t.c) -->
-    <div class="pdf-viewer">
-      <iframe
-        src="/uploads/<%= fileId %>.pdf"
-        width="600"
-        height="800"
-        id="pdfIframe"
-      ></iframe>
-    </div>
-
-    <!-- Block notes -->
-    <div class="notes-section">
-      <h2>My Notes</h2>
-      <ul id="notesList">
-        <!-- Then JS will load or render notes -->
-      </ul>
-      <!-- Fold for additions new notes -->
-      <textarea id="newNoteText" placeholder="Write your note..."></textarea>
-      <button id="saveNoteBtn">Save note</button>
-    </div>
-
-    <!-- Blinker -->
-    <div id="blinker" class="blinker">BLINK</div>
+  <!-- UI switching themes -->
+  <div>
+    <label>Theme:</label>
+    <select>
+      <option value="light">Light</option>
+      <option value="dark">Dark</option>
+    </select>
   </div>
 
-  <% include partials/footer.ejs %>
+  <!-- Conteiner for PDF -->
+  <div>
+    <iframe src="#" width="600" height="800"></iframe>
+  </div>
+
+  <!-- Block notes -->
+  <div>
+    <h2>My Notes</h2>
+    <ul>
+      <li>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate optio nesciunt blanditiis sunt alias rem
+        deserunt, libero dolores eum vitae?</li>
+    </ul>
+    <!-- Fold for additions new notes -->
+    <textarea></textarea>
+    <button>Save note</button>
+  </div>
+
+  <!-- Blinker -->
+  <div>BLINK</div>
+</div>
