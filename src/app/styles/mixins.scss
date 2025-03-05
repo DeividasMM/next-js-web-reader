@@ -1,0 +1,32 @@
+@use 'variables' as variables;
+
+@mixin header-second-style {
+  font-family: "Anta", serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 20px;
+  letter-spacing: 2px;
+  color: variables.$base-white;
+}
+
+@mixin paragraphs {
+  font-family: "Anta", serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 15px;
+  letter-spacing: 1px;
+  color: variables.$base-white;
+}
+
+@mixin white-icons {
+  width: 35px;
+  height: 35px;
+  padding-right: 10px;
+  color: variables.$base-white;
+}
+
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
