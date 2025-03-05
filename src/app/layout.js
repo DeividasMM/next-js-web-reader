@@ -1,5 +1,7 @@
-import "/src/app/styles/global.css";
+import React from "react";
+import ReactDOM from "react-dom";
 
+import "/src/app/styles/global.css";
 import Navigation from "./navigation";
 import Footer from "./footer";
 
