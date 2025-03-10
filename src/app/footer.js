@@ -6,7 +6,10 @@ export default function Footer() {
         <div className="footer-info">
           <ul>
             <h4>Support</h4>
-            <li>Read-Y@gmail.com</li>
+            <li>
+              <a href="mailto:freelancersdevelopment@gmail.com">Found a bug?</a>
+            </li>
+            <li>freelancersdevelopment@gmail.com</li>
             <li>Vilnius</li>
           </ul>
         </div>
