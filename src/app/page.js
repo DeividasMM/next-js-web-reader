@@ -14,7 +14,7 @@ export default function Home() {
       ></video>
       <div className="container-home">
         <div>
-          <a href="#">
+          <a contentEditable="true" href="#">
             <FontAwesomeIcon icon={faCirclePlay} className="white-icons" />
             Start using READ · Y now!
           </a>

@@ -1,3 +1,4 @@
+import React from "react";
 // /reading/:id
 export default function Reading() {
   return (
@@ -17,7 +18,12 @@ export default function Reading() {
         </div>
 
         <div>
-          <iframe src="#" width="600" height="800"></iframe>
+          <embed
+            src="./assets/videos/test.pdf"
+            width="1000px"
+            height="1100px"
+            type="application/pdf"
+          />
         </div>
 
         <div>
