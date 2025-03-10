@@ -1,5 +1,9 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faDownload, faBookOpen, faCircleUser } from "@fortawesome/free-solid-svg-icons";
+import {
+  faDownload,
+  faBookOpen,
+  faCircleUser,
+} from "@fortawesome/free-solid-svg-icons";
 import {
   ClerkProvider,
   SignInButton,
