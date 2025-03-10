@@ -1,5 +1,3 @@
-// import ReactDOM from 'react-dom'
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCirclePlay } from "@fortawesome/free-solid-svg-icons";
 
@@ -14,7 +12,7 @@ export default function Home() {
       ></video>
       <div className="container-home">
         <div>
-          <a contentEditable="true" href="#">
+          <a href="#">
             <FontAwesomeIcon icon={faCirclePlay} className="white-icons" />
             Start using READ · Y now!
           </a>
