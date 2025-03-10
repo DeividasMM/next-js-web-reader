@@ -1,10 +1,23 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCirclePlay } from "@fortawesome/free-solid-svg-icons";
+
 export default function Home() {
   return (
     <>
-      <h1>READ · Y</h1>
-      <p>Modern library — For Enthusiasts</p>
-      <div>Check out our library!</div>
-      <button>⬇</button>
+      <video
+        src="./assets/videos/Read-Y Home.m4v"
+        autoPlay
+        muted
+        id="video-home"
+      ></video>
+      <div className="container-home">
+        <div>
+          <a href="#">
+            <FontAwesomeIcon icon={faCirclePlay} className="white-icons" />
+            Start using READ · Y now!
+          </a>
+        </div>
+      </div>
     </>
   );
 }

@@ -1,3 +1,6 @@
-body {
-  color: red;
-}
+@use 'home';
+@use 'mixins';
+@use 'variables';
+@use 'footer';
+
+@import url("https://fonts.googleapis.com/css2?family=Anta&display=swap");
