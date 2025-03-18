@@ -3,18 +3,18 @@
 import React, { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFilePdf } from "@fortawesome/free-regular-svg-icons";
+import { faFilePdf, faDownload } from "@fortawesome/free-solid-svg-icons";
 
 export default function Upload() {
   const [file, setFile] = useState(null);
-  const [Title, setTitle] = useState("");
-  const [Author, setAuthor] = useState("");
+  const [title, setTitle] = useState("");
+  const [author, setAuthor] = useState("");
   const [selectedOption, setSelectedOption] = useState("");
 
   const onDrop = (acceptedFiles) => {
     const uploadedFile = acceptedFiles[0];
 
-    // Checks if file is pdf
+    // checks if file is pdf
     if (uploadedFile.type === "application/pdf") {
       setFile(uploadedFile);
     } else {
@@ -29,32 +29,23 @@ export default function Upload() {
     multiple: false,
   });
 
-  // displays svg when correct file type is detected
-  const getFileIcon = (fileType) => {
-    if (fileType === "application/pdf") {
-      return //<FontAwesomeIcon icon={faFilePdf} style={{ width: "35px", height: "35px" }} />;
-    }
-    return null;
-  };
-
-  // removes uploaded file
   const removeFile = () => {
     setFile(null);
   };
 
-  // check if pdf file uploaded
   const handleSubmit = async () => {
+    // check if pdf file uploaded
     if (!file) {
       alert("Please upload a PDF file.");
       return;
     }
     // check if title is written
-    if (!Title.trim()) {
+    if (!title.trim()) {
       alert("Please enter a Title.");
       return;
     }
     // check if author is written
-    if (!Author.trim()) {
+    if (!author.trim()) {
       alert("Please enter an Author.");
       return;
     }
@@ -63,190 +54,192 @@ export default function Upload() {
       alert("Please select a valid category.");
       return;
     }
-  
+
     const formData = new FormData();
     formData.append("file", file);
-    formData.append("title", Title);
-    formData.append("author", Author);
+    formData.append("title", title);
+    formData.append("author", author);
     formData.append("category", selectedOption);
-  
+
     // send file to db
     try {
-      const response = await fetch("", { 
+      const response = await fetch("", {
         method: "POST",
         body: formData,
       });
-  
+
       if (!response.ok) {
         throw new Error("Upload failed");
       }
-  
+
       alert("File uploaded successfully!");
     } catch (error) {
       alert("Failed to upload file.");
     }
   };
-  
 
   return (
-    <div className="container">
-      <style>{`
-        .container {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          height: 100vh;
-          margin: 0;
-        }
-
-        .dropzone-container {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-        }
-
-        .dropzone {
-          border: 2px solid black;
-          padding: 40px;
-          width: 350px;
-          height: 500px;
-          text-align: center;
-          cursor: pointer;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          border-radius: 10px;
-        }
-
-        .file-info {
-          margin-top: 20px;
-          text-align: center;
-          font-size: 20px;
-          word-wrap: break-word;
-          word-break: break-word;
-          max-width: 75%;
-        }
-
-        .input-container {
-          display: flex;
-          flex-direction: column;
-          justify-content: flex-start;
-          margin-left: 50px;
-          position: relative;
-          top: -205px;
-        }
-
-        .input {
-          margin-bottom: 10px;
-          padding: 5px;
-          font-size: 16px;
-          width: 200px;
-          border: 2px solid black;
-          border-radius: 16px;
-        }
-
-        .select-box {
-          margin-top: 10px;
-          padding: 5px;
-          font-size: 16px;
-          width: 200px;
-          border: 2px solid black;
-          border-radius: 16px;
-          background-color: white;
-          cursor: pointer;
-        }
-
-        .remove-button, .submit-button {
-          margin-top: 10px;
-          padding: 10px 20px;
-          border: none;
-          border-radius: 5px;
-          cursor: pointer;
-        }
-
-        .remove-button {
-          background-color: red;
-          color: white;
-        }
-
-        .remove-button:hover {
-          background-color: darkred;
-        }
-
-        .submit-button {
-          background-color: blue;
-          color: white;
-          font-size: 16px;
-        }
-
-        .submit-button:hover {
-          background-color: darkblue;
-        }
-      `}</style>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        height: "100vh",
+      }}
+    >
+      <h1 style={{ position: "absolute", top: "20px", textAlign: "center" }}>
+        Upload your file!
+      </h1>
 
       {/* dropzone area */}
-      <div className="dropzone-container">
-        <div {...getRootProps({ className: "dropzone" })}>
-          <input {...getInputProps()} />
-          <p>Format: PDF only</p>
+      <div
+        {...getRootProps()}
+        style={{
+          border: "3px dotted black",
+          padding: "40px",
+          width: "550px",
+          height: "300px",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          flexDirection: "column",
+          position: "relative",
+        }}
+      >
+        <input {...getInputProps()} />
+
+        <FontAwesomeIcon
+          icon={faDownload}
+          style={{ fontSize: "40px", marginBottom: "10px" }}
+        />
+
+        <div style={{ textAlign: "center" }}>
+          <p style={{ marginBottom: "10px" }}>Format: PDF only</p>
+          <p style={{ fontSize: "12px" }}>File cannot exceed 10MB.</p>
         </div>
 
-        {/* uploaded file display + remove file button/function */}
         {file && (
-          <div className="file-info">
-            {getFileIcon(file.type)}
-            <p>{file.name}</p>
-            <button className="remove-button" onClick={removeFile}>
-              Remove File
-            </button>
+          <div
+            style={{
+              position: "absolute",
+              bottom: "10px",
+              textAlign: "center",
+              width: "540px",
+            }}
+          >
+            {/* uploaded file + pdf svg display*/}
+            <FontAwesomeIcon
+              icon={faFilePdf}
+              style={{ fontSize: "35px", marginBottom: "5px" }}
+            />
+            <p style={{ fontSize: "16px" }}>{file.name}</p>
           </div>
         )}
       </div>
 
-      {/* text input fields */}
-      <div className="input-container">
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          width: "550px",
+        }}
+      >
+        {/* title input */}
         <input
           type="text"
-          value={Title}
+          value={title}
           onChange={(e) => setTitle(e.target.value)}
-          className="input"
+          style={{
+            marginTop: "10px",
+            marginBottom: "15px",
+            padding: "12px",
+            width: "550px",
+            height: "46px",
+          }}
           placeholder="Title"
         />
-        <input
-          type="text"
-          value={Author}
-          onChange={(e) => setAuthor(e.target.value)}
-          className="input"
-          placeholder="Author"
-        />
 
-        {/* Select dropdown */}
-        <select
-          className="select-box"
-          value={selectedOption}
-          onChange={(e) => setSelectedOption(e.target.value)}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            gap: "20px",
+            width: "550px",
+          }}
         >
-          <option value="">Select Category</option>
-          <option value="fantasy">Fantasy</option>
-          <option value="science-fiction">Science Fiction</option>
-          <option value="mystery">Mystery</option>
-          <option value="romance">Romance</option>
-          <option value="historical-fiction">Historical Fiction</option>
-          <option value="thriller">Thriller</option>
-          <option value="horror">Horror</option>
-          <option value="adventure">Adventure</option>
-          <option value="biography">Biography</option>
-          <option value="business">Business & Finance</option>
-          <option value="health">Health & Wellness</option>
-          <option value="history">History</option>
-          <option value="science">Science & Technology</option>
-          <option value="philosophy">Philosophy</option>
-        </select>
+          {/* author input */}
+          <input
+            type="text"
+            value={author}
+            onChange={(e) => setAuthor(e.target.value)}
+            style={{
+              flex: "1",
+              padding: "12px",
+              height: "46px",
+            }}
+            placeholder="Author"
+          />
 
-        {/* Submit button */}
-        <button className="submit-button" onClick={handleSubmit}>
-          Submit
-        </button>
+          {/* Select dropdown */}
+          <select
+            style={{
+              flex: "1",
+              padding: "12px",
+              height: "46px",
+            }}
+            value={selectedOption}
+            onChange={(e) => setSelectedOption(e.target.value)}
+          >
+            <option value="">Select Category</option>
+            <option value="fantasy">Fantasy</option>
+            <option value="science-fiction">Science Fiction</option>
+            <option value="mystery">Mystery</option>
+            <option value="romance">Romance</option>
+            <option value="historical-fiction">Historical Fiction</option>
+            <option value="thriller">Thriller</option>
+            <option value="horror">Horror</option>
+            <option value="adventure">Adventure</option>
+            <option value="biography">Biography</option>
+            <option value="business">Business & Finance</option>
+            <option value="health">Health & Wellness</option>
+            <option value="history">History</option>
+            <option value="science">Science & Technology</option>
+            <option value="philosophy">Philosophy</option>
+          </select>
+        </div>
+
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            width: "550px",
+            marginTop: "15px",
+          }}
+        >
+          {/* submit button */}
+          <button
+            style={{
+              padding: "10px 15px",
+              textAlign: "center",
+              width: "130px",
+            }}
+            onClick={handleSubmit}
+          >
+            Submit
+          </button>
+          {/* remove button */}
+          <button
+            style={{
+              padding: "10px 15px",
+              textAlign: "center",
+              width: "130px",
+            }}
+            onClick={removeFile}
+          >
+            Remove
+          </button>
+        </div>
       </div>
     </div>
   );
