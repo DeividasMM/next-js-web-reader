@@ -1,5 +1,93 @@
-// /reading/:id
+"use client";
+import { useState, useRef, useEffect } from "react";
+
 export default function Reading() {
+  const [iseditable, setiseditable] = useState(false);
+  const [title, settitle] = useState("Research suggests that timed tests cause math anxiety");
+  const [author, setauthor] = useState("Jo Boaler");
+  const [zenmode, setzenmode] = useState(false);
+  const [darkmode, setdarkmode] = useState(false);
+  const [annotations, setannotations] = useState([]);
+  const annotationinputref = useRef(null);
+
+  useEffect(() => {
+    const storeddarkmode = localStorage.getItem("dark_mode");
+    if (storeddarkmode !== null) {
+      setdarkmode(JSON.parse(storeddarkmode));
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("dark_mode", JSON.stringify(darkmode));
+  }, [darkmode]);
+
+  const toggleedit = () => setiseditable((prev) => !prev);
+  const handletitlechange = (e) => settitle(e.target.innerText);
+  const handleauthorchange = (e) => setauthor(e.target.innerText);
+
+  const togglezenmode = () => {
+    setzenmode((prev) => !prev);
+    setiseditable(false);
+  };
+
+  const toggledarkmode = () => setdarkmode((prev) => !prev);
+
+  const savechanges = () => {
+    alert("Changes saved successfully!");
+  };
+
+  const addannotation = (event) => {
+    if (
+      event.type === "click" ||
+      (event.type === "keydown" && event.key === "Enter")
+    ) {
+      const text = annotationinputref.current.value;
+      if (text.trim()) {
+        const now = new Date();
+
+        const date =
+          now.getFullYear() +
+          "-" +
+          String(now.getMonth() + 1).padStart(2, "0") +
+          "-" +
+          String(now.getDate()).padStart(2, "0");
+
+        const time =
+          String(now.getHours()).padStart(2, "0") +
+          ":" +
+          String(now.getMinutes()).padStart(2, "0");
+
+        setannotations([
+          ...annotations,
+          { text, timestamp: `${date} ${time}`, isediting: false },
+        ]);
+        annotationinputref.current.value = "";
+      }
+    }
+  };
+
+  const deleteannotation = (index) => {
+    setannotations(annotations.filter((_, i) => i !== index));
+  };
+
+  const toggleeditannotation = (index) => {
+    setannotations(
+      annotations.map((annotation, i) =>
+        i === index
+          ? { ...annotation, isediting: !annotation.isediting }
+          : annotation
+      )
+    );
+  };
+
+  const updateannotation = (index, newtext) => {
+    setannotations(
+      annotations.map((annotation, i) =>
+        i === index ? { ...annotation, text: newtext } : annotation
+      )
+    );
+  };
+
   return (
     <>
       <main
@@ -8,47 +96,61 @@ export default function Reading() {
           justifyContent: "center",
           alignItems: "flex-start",
           flexDirection: "row",
+          background: darkmode ? "#121212" : "white",
+          color: darkmode ? "white" : "black",
         }}
       >
         <section
           style={{
             border: "1px solid red",
-
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
             flexDirection: "column",
           }}
         >
-          {/* /\/\/\ Viršutinė dalis, pavadinimai ir mygtukai */}
           <header
             style={{
               border: "1px solid red",
-
               width: "1000px",
-
               margin: "30px 0",
-
               display: "flex",
               justifyContent: "space-between",
               gap: "20px",
             }}
           >
             <div>
-              {/* Dėl 'contentEditable' abiems reikės turėti useState, todėl yra 2 error'ai */}
-              <h1 contentEditable="true">
-                Research suggests that timed tests cause math anxiety
+              <h1
+                contentEditable={iseditable}
+                suppressContentEditableWarning={true}
+                onInput={handletitlechange}
+                style={{ margin: "0" }}
+              >
+                {title}
               </h1>
-              <h4 contentEditable="true">JO BOALER</h4>
+              <h4
+                contentEditable={iseditable}
+                suppressContentEditableWarning={true}
+                onInput={handleauthorchange}
+                style={{ margin: "0" }}
+              >
+                {author}
+              </h4>
             </div>
-            <button>🔓</button> {/* Atrakinti/užkrakinti koregavimą (toggle) */}
-            <button>📤</button> {/* Išsaugoti pakeitimus */}
-            <input name="zen-mode" type="checkbox" />
-            <input name="day-night-mode" type="checkbox" />
-            <button>🔖</button> {/* Title ir Author atrakinti */}
+            {zenmode ? (
+              <button onClick={togglezenmode}>Exit Zen</button>
+            ) : (
+              <>
+                <button onClick={toggleedit}>🔓</button>
+                <button onClick={savechanges}>📤</button>
+                <button onClick={togglezenmode}>Zen Mode</button>
+                <button onClick={toggledarkmode}>
+                  {darkmode ? "Light Mode" : "Dark Mode"}
+                </button>
+              </>
+            )}
           </header>
 
-          {/* /\/\/\ Dokumento dalis */}
           <embed
             src="./assets/videos/test.pdf"
             width="1000px"
@@ -57,91 +159,117 @@ export default function Reading() {
           />
         </section>
 
-        {/*  /\/\/\ Užrašų ir žymių vieta */}
-        <section
-          style={{
-            height: "1212px",
-
-            border: "1px solid red",
-
-            margin: "0 10px",
-
-            overflowY: "scroll",
-          }}
-        >
-          <h2>Annotations</h2>
-          <div
+        {!zenmode && (
+          <section
             style={{
+              border: "1px solid red",
+              height: "1159px",
+              margin: "0 10px",
+              overflowY: "scroll",
+              padding: "10px",
+              width: "300px",
+              marginTop: "50px",
               display: "flex",
-              justifyContent: "space-around",
-              alignItems: "flex-start",
+              flexDirection: "column",
+              justifyContent: "flex-end",
             }}
           >
-            <button>🔓</button>
-            <button>📤</button>
-            <button>➕</button>
-            <button>❌</button> {/* Uždaryti? */}
-          </div>
-          <ul
-            style={{
-              minWidth: "200px",
-              maxWidth: "350px",
-            }}
-          >
-            <li
+            <h2 style={{ marginBottom: "15px" }}>Annotations</h2>
+            <ul
               style={{
-                marginBottom: "15px",
-                paddingLeft: "5px",
-
-                listStyle: "none",
+                paddingLeft: "0",
+                listStyleType: "none",
+                overflowY: "auto",
+                flexGrow: 1,
               }}
             >
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Cupiditate optio nesciunt blanditiis sunt alias rem deserunt,
-              libero dolores eum vitae?
-            </li>
-            <li
-              style={{
-                marginBottom: "15px",
-                paddingLeft: "5px",
-
-                listStyle: "none",
-              }}
-            >
-              Sed aliquam neque eget mi tempor, vitae fermentum mi placerat. Nam
-              nunc lectus, elementum interdum vulputate ac, imperdiet sed nunc.
-            </li>
-            <li
-              style={{
-                marginBottom: "15px",
-                paddingLeft: "5px",
-
-                listStyle: "none",
-              }}
-            >
-              Mollis per fames mus, quisque donec potenti. Ipsum fermentum est
-              lobortis per varius a? Efficitur scelerisque rhoncus cubilia amet,
-              mi montes iaculis duis lacinia.
-            </li>
-            <li
-              style={{
-                marginBottom: "15px",
-                paddingLeft: "5px",
-
-                listStyle: "none",
-              }}
-            >
-              Lacus donec justo conubia gravida magna ultrices scelerisque.
-              Inceptos torquent hendrerit leo sapien consequat pellentesque. Nam
-              tortor semper donec sagittis enim nam mus. Libero enim nascetur
-              cursus parturient, turpis vulputate dis. Non conubia ante eros at
-              pellentesque vehicula. Potenti tristique augue a dui urna netus
-              aliquam diam. Mus donec sapien potenti amet orci integer. Faucibus
-              mollis placerat; sem blandit curae nascetur. Ut pellentesque
-              feugiat himenaeos consectetur etiam faucibus faucibus.
-            </li>
-          </ul>
-        </section>
+              {annotations.map((annotation, index) => (
+                <li
+                  key={index}
+                  style={{
+                    marginBottom: "15px",
+                    paddingLeft: "5px",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "10px",
+                    border: "1px solid #ccc",
+                    padding: "10px",
+                    position: "relative",
+                    maxWidth: "250px",
+                  }}
+                >
+                  {annotation.isediting ? (
+                    <input
+                      type="text"
+                      value={annotation.text}
+                      onChange={(e) => updateannotation(index, e.target.value)}
+                      style={{
+                        padding: "5px",
+                        width: "100%",
+                        marginRight: "10px",
+                      }}
+                    />
+                  ) : (
+                    annotation.text
+                  )}
+                  <div
+                    style={{
+                      position: "absolute",
+                      top: "5px",
+                      right: "5px",
+                      display: "flex",
+                      gap: "5px",
+                    }}
+                  >
+                    <button onClick={() => toggleeditannotation(index)}>✏️</button>
+                    <button onClick={() => deleteannotation(index)}>🗑️</button>
+                  </div>
+                  <div
+                    style={{
+                      position: "absolute",
+                      bottom: "-2px",
+                      left: "0",
+                      fontSize: "12px",
+                      color: darkmode ? "#bbb" : "#555",
+                    }}
+                  >
+                    {annotation.timestamp}
+                  </div>
+                </li>
+              ))}
+            </ul>
+            <div style={{ position: "relative" }}>
+              <textarea
+                ref={annotationinputref}
+                style={{
+                  border: "1px solid #ccc",
+                  padding: "10px",
+                  width: "100%",
+                  height: "80px",
+                  marginBottom: "15px",
+                  marginTop: "10px",
+                  resize: "none",
+                }}
+                placeholder="Write annotation"
+                onKeyDown={addannotation}
+              />
+              <button
+                onClick={addannotation}
+                style={{
+                  position: "absolute",
+                  bottom: "20px",
+                  right: "0px",
+                  background: "none",
+                  border: "none",
+                  cursor: "pointer",
+                  fontSize: "20px",
+                }}
+              >
+                ➡️
+              </button>
+            </div>
+          </section>
+        )}
       </main>
     </>
   );
