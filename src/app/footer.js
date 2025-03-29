@@ -2,7 +2,7 @@ export default function Footer() {
   return (
     <>
       <div className="container-footer">
-        <div className="shapedividers_com-7554"></div>
+        <div className="shapedividers_com-6161"></div>
         <div className="footer-info">
           <ul>
             <h4>Support</h4>

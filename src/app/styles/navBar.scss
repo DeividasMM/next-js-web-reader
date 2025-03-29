@@ -1,0 +1,65 @@
+@use "variables" as variables;
+@use "mixins" as mixins;
+
+.tooltip-text {
+  visibility: hidden;
+  opacity: 0;
+  position: absolute;
+  left: 60px;
+  top: 28px;
+  transform: translateX(-10px) translateY(-25px);
+  padding: 7px 20px;
+  border-radius: 0px !important;
+  border-top-left-radius: 15px !important;
+  border-bottom-left-radius: 15px !important;
+  background-color: variables.$base-black;
+  @include mixins.paragraphs;
+  @include mixins.glassmorphism;
+  white-space: nowrap;
+  transition: transform 0.3s ease-in-out, opacity 0.4s;
+}
+
+.link:hover .tooltip-text {
+  visibility: visible;
+  opacity: 1;
+  transform: translateX(0) translateY(-25px);
+}
+
+.link {
+  display: flex;
+  align-items: center;
+  position: relative;
+  text-decoration: none;
+}
+
+.navigation-container {
+  position: fixed;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 15px 10px;
+  gap: 40px;
+  z-index: 5;
+  @include mixins.glassmorphism;
+}
+
+.icon {
+  width: 35px;
+  height: 35px;
+  color: variables.$shade-white;
+  transition: 0.3s ease-in-out;
+}
+
+.icon:hover {
+  color: variables.$grey-white;
+  transform: scale(1.2);
+  transition: 0.3s ease-in-out;
+}
+
+.cl-internal-1j7ahlv {
+  width: 35px;
+  height: 35px;
+}
