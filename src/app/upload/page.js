@@ -1,15 +1,19 @@
 "use client";
 
+import { useUser } from "@clerk/nextjs";
 import React, { useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFilePdf, faDownload } from "@fortawesome/free-solid-svg-icons";
 
 export default function Upload() {
+  const { user } = useUser();
   const [file, setFile] = useState(null);
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [selectedOption, setSelectedOption] = useState("");
+
+  console.log(user);
 
   const onDrop = (acceptedFiles) => {
     const uploadedFile = acceptedFiles[0];
@@ -25,7 +29,7 @@ export default function Upload() {
   // react-dropzone accepting only a single pdf file at a time
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
-    accept: [".pdf"],
+    accept: { "application/pdf": [".pdf"] },
     multiple: false,
   });
 
@@ -72,6 +76,7 @@ export default function Upload() {
         throw new Error("Upload failed");
       }
 
+      console.log(formData);
       alert("File uploaded successfully!");
     } catch (error) {
       alert("Failed to upload file.");
