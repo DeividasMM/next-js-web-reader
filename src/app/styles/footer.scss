@@ -61,4 +61,13 @@
     @include mixins.header-second-style;
     text-align: start;
   }
+  a {
+    color: variables.$base-white;
+    transition: ease-in-out 300ms;
+
+    &:hover {
+      font-size: 16px;
+      color: variables.$grey-white;
+    }
+  }
 }

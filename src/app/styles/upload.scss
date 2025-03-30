@@ -1,0 +1,112 @@
+@use "variables" as variables;
+@use "mixins" as mixins;
+
+.main-container {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translate(-50%);
+  z-index: 1;
+}
+
+.drop-zone {
+  @include mixins.flex-center;
+  @include mixins.glassmorphism;
+  @include mixins.paragraphs;
+  flex-direction: column;
+  width: 34.5rem;
+  height: 25rem;
+  border: dashed;
+  cursor: pointer;
+}
+
+.drop-zone-content {
+  @include mixins.flex-center;
+  flex-direction: column;
+  text-align: center;
+  gap: 10px;
+  padding-top: 20px;
+}
+
+.drop-zone-upload {
+  @include mixins.flex-center;
+  flex-direction: row;
+  position: absolute;
+  bottom: 10%;
+  width: 80%;
+  overflow-x: scroll;
+}
+
+.header {
+  @include mixins.header-first-style;
+  position: absolute;
+  top: 10%;
+}
+
+.input-title {
+  @include mixins.glassmorphism;
+  @include mixins.paragraphs;
+  width: 100%;
+  height: 3rem;
+  margin: 15px 0px;
+  text-align: center;
+}
+
+.input-author-selection {
+  @include mixins.flex-center;
+  justify-content: space-between;
+  gap: 3rem;
+}
+
+.input-author {
+  @include mixins.glassmorphism;
+  @include mixins.paragraphs;
+  width: 45%;
+  height: 3rem;
+  text-align: center;
+}
+
+.input-selection {
+  @include mixins.glassmorphism;
+  @include mixins.paragraphs;
+  width: 45%;
+  height: 3rem;
+  text-align: center;
+
+  option {
+    color: black;
+    background-color: variables.$shade-white;
+  }
+}
+
+.input-buttons {
+  @include mixins.flex-center;
+  justify-content: space-between;
+  width: 34.5rem;
+  margin-top: 15px;
+}
+
+.input-buttons {
+  @include mixins.buttons;
+}
+
+.greek {
+    position: absolute;
+    width: 300px;
+    height: 600px;
+    right: -50px;
+    top: 20vh;
+    transform: rotate(-37deg);
+    filter: blur(3px);
+}
+
+.books {
+    position: absolute;
+    width: 250px;
+    height: 400px;
+    bottom: 20%;
+    left: 8%;
+    transform: rotate(15deg);
+    filter: blur(3px);
+    z-index: -1;
+}

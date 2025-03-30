@@ -1,10 +1,19 @@
-@use 'variables' as variables;
+@use "variables" as variables;
 
 @mixin header-second-style {
   font-family: "Anta", serif;
   font-weight: 400;
   font-style: normal;
   font-size: 20px;
+  letter-spacing: 2px;
+  color: variables.$base-white;
+}
+
+@mixin header-first-style {
+  font-family: "Anta", serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 30px;
   letter-spacing: 2px;
   color: variables.$base-white;
 }
@@ -39,4 +48,36 @@
   backdrop-filter: blur(3.5px);
   -webkit-backdrop-filter: blur(3.5px);
   border: 2px solid variables.$base-white;
+}
+
+@mixin buttons {
+  button {
+    text-align: center;
+    display: inline-block;
+    padding: 15px 40px;
+    border: 1px solid variables.$base-white;
+    cursor: pointer;
+    letter-spacing: 2px;
+    position: relative;
+    overflow: hidden;
+    @include glassmorphism;
+    @include paragraphs;
+  }
+
+  button::before {
+    content: "";
+    position: absolute;
+    height: 150px;
+    width: 50px;
+    background-color: variables.$base-white;
+    right: -40px;
+    top: -40px;
+    transform: rotate(37deg);
+    transition: all 0.3s;
+    opacity: 0.3;
+  }
+
+  button:hover:before {
+    right: 105%;
+  }
 }

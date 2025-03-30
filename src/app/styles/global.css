@@ -120,6 +120,14 @@
   color: white;
   text-align: start;
 }
+.footer-info a {
+  color: white;
+  transition: ease-in-out 300ms;
+}
+.footer-info a:hover {
+  font-size: 16px;
+  color: #797877;
+}
 
 .tooltip-text {
   visibility: hidden;
@@ -199,6 +207,228 @@
 .cl-internal-1j7ahlv {
   width: 35px;
   height: 35px;
+}
+
+.main-container {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translate(-50%);
+  z-index: 1;
+}
+
+.drop-zone {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* From https://css.glass */
+  background: rgba(255, 255, 255, 0.27);
+  border-radius: 8px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(3.5px);
+  -webkit-backdrop-filter: blur(3.5px);
+  border: 2px solid white;
+  font-family: "Anta", serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 15px;
+  letter-spacing: 1px;
+  color: white;
+  flex-direction: column;
+  width: 34.5rem;
+  height: 25rem;
+  border: dashed;
+  cursor: pointer;
+}
+
+.drop-zone-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  gap: 10px;
+  padding-top: 20px;
+}
+
+.drop-zone-upload {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  position: absolute;
+  bottom: 10%;
+  width: 80%;
+  overflow-x: scroll;
+}
+
+.header {
+  font-family: "Anta", serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 30px;
+  letter-spacing: 2px;
+  color: white;
+  position: absolute;
+  top: 10%;
+}
+
+.input-title {
+  /* From https://css.glass */
+  background: rgba(255, 255, 255, 0.27);
+  border-radius: 8px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(3.5px);
+  -webkit-backdrop-filter: blur(3.5px);
+  border: 2px solid white;
+  font-family: "Anta", serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 15px;
+  letter-spacing: 1px;
+  color: white;
+  width: 100%;
+  height: 3rem;
+  margin: 15px 0px;
+  text-align: center;
+}
+
+.input-author-selection {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  justify-content: space-between;
+  gap: 3rem;
+}
+
+.input-author {
+  /* From https://css.glass */
+  background: rgba(255, 255, 255, 0.27);
+  border-radius: 8px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(3.5px);
+  -webkit-backdrop-filter: blur(3.5px);
+  border: 2px solid white;
+  font-family: "Anta", serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 15px;
+  letter-spacing: 1px;
+  color: white;
+  width: 45%;
+  height: 3rem;
+  text-align: center;
+}
+
+.input-selection {
+  /* From https://css.glass */
+  background: rgba(255, 255, 255, 0.27);
+  border-radius: 8px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(3.5px);
+  -webkit-backdrop-filter: blur(3.5px);
+  border: 2px solid white;
+  font-family: "Anta", serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 15px;
+  letter-spacing: 1px;
+  color: white;
+  width: 45%;
+  height: 3rem;
+  text-align: center;
+}
+.input-selection option {
+  color: black;
+  background-color: rgb(242, 240, 239);
+}
+
+.input-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  justify-content: space-between;
+  width: 34.5rem;
+  margin-top: 15px;
+}
+
+.input-buttons button {
+  text-align: center;
+  display: inline-block;
+  padding: 15px 40px;
+  border: 1px solid white;
+  cursor: pointer;
+  letter-spacing: 2px;
+  position: relative;
+  overflow: hidden;
+  /* From https://css.glass */
+  background: rgba(255, 255, 255, 0.27);
+  border-radius: 8px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(3.5px);
+  -webkit-backdrop-filter: blur(3.5px);
+  border: 2px solid white;
+  font-family: "Anta", serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 15px;
+  letter-spacing: 1px;
+  color: white;
+}
+.input-buttons button::before {
+  content: "";
+  position: absolute;
+  height: 150px;
+  width: 50px;
+  background-color: white;
+  right: -40px;
+  top: -40px;
+  transform: rotate(37deg);
+  transition: all 0.3s;
+  opacity: 0.3;
+}
+.input-buttons button:hover:before {
+  right: 105%;
+}
+
+.greek {
+  position: absolute;
+  width: 300px;
+  height: 600px;
+  right: -50px;
+  top: 20vh;
+  transform: rotate(-37deg);
+  filter: blur(3px);
+}
+
+.books {
+  position: absolute;
+  width: 250px;
+  height: 400px;
+  bottom: 20%;
+  left: 8%;
+  transform: rotate(15deg);
+  filter: blur(3px);
+  z-index: -1;
+}
+
+body {
+  position: relative;
+  margin: 0;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: -20px;
+  left: -20px;
+  right: -20px;
+  bottom: -20px;
+  background: radial-gradient(circle farthest-corner at 50% 100%, rgba(204, 204, 204, 0.9294117647) 0% 18%, rgba(140, 140, 140, 0.9294117647) 18%, rgba(166, 166, 166, 0.9294117647) 22% 36%, rgba(115, 115, 115, 0.9294117647) 36%, rgba(128, 128, 128, 0.9294117647) 40% 54%, rgba(71, 71, 71, 0.9294117647) 54%, rgba(77, 77, 77, 0.9294117647) 58% 72%, rgba(31, 31, 31, 0.9294117647) 72%, rgba(38, 38, 38, 0.9294117647) 76% 90%, rgba(13, 13, 13, 0.9294117647) 90% 90%), radial-gradient(circle farthest-corner at 0% 50%, #ff0040 0%, fuchsia 100%), linear-gradient(to top, #ffa100 0%, #66e6ff 100%);
+  background-blend-mode: multiply;
+  filter: blur(4px);
+  z-index: -1;
 }
 
 /*# sourceMappingURL=global.css.map */
