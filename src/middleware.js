@@ -4,37 +4,34 @@ import { turso } from "./lib/turso";
 export default clerkMiddleware(async (auth, req) => {
   const db = turso;
 
-  try {
-    const isProtectedRoute = createRouteMatcher([
-      "/upload(.*)",
-      "/library(.*)",
-    ]);
-    if (isProtectedRoute(req)) await auth.protect();
+  const isProtectedRoute = createRouteMatcher([
+    "/upload(.*)",
+    "/library(.*)",
+    "/reading(.*)",
+  ]);
+  if (isProtectedRoute(req)) await auth.protect();
 
-    const { userId, sessionClaims } = await auth();
+  const { userId, sessionClaims } = await auth();
 
-    if (userId) {
-      const email = sessionClaims?.email || "FAIL@example.com";
-      const name =
-        sessionClaims?.firstName || sessionClaims?.username || "FAIL";
+  console.log("🚩 Full sessionClaims:", sessionClaims);
 
-      console.log("USER DATA 👉:", { userId, email, name });
+  if (userId) {
+    const email = sessionClaims?.email || "NO-VERIFIED@example.com";
+    const name = sessionClaims?.firstName || "NO-NAME";
+    const surname = sessionClaims?.lastName || "NO-SURNAME";
 
-      const userExists = await db.execute({
-        sql: "SELECT clerk_user_id FROM users WHERE clerk_user_id = ?",
-        args: [userId],
+    const userExists = await db.execute({
+      sql: "SELECT clerk_user_id FROM users WHERE clerk_user_id = ?",
+      args: [userId],
+    });
+    // console.log("USER IS 👉:", userExists.rows);
+
+    if (!userExists.rows.length) {
+      const insertResult = await db.execute({
+        sql: "INSERT INTO users (clerk_user_id, name, surname, email, user_type) VALUES (?, ?, ?, ?, ?)",
+        args: [userId, name, surname, email, "consumer"],
       });
-      // console.log("USER IS 👉:", userExists.rows);
-
-      if (!userExists.rows.length) {
-        const insertResult = await db.execute({
-          sql: "INSERT INTO users (clerk_user_id, name, email, user_type) VALUES (?, ?, ?, ?)",
-          args: [userId, name, email, "consumer"],
-        });
-      }
     }
-  } catch (e) {
-    console.error("MIDDLEWARE ERROR 👉:", e);
   }
 });
 
