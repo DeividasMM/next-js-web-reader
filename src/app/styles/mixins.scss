@@ -9,6 +9,15 @@
   color: variables.$base-white;
 }
 
+@mixin large-text {
+  font-family: "Anta", serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 80px;
+  letter-spacing: 2px;
+  color: variables.$base-white;
+}
+
 @mixin header-first-style {
   font-family: "Anta", serif;
   font-weight: 400;
@@ -70,14 +79,14 @@
     height: 150px;
     width: 50px;
     background-color: variables.$base-white;
-    right: -40px;
-    top: -40px;
+    left: -40px;
+    bottom: -40px;
     transform: rotate(37deg);
     transition: all 0.3s;
     opacity: 0.3;
   }
 
   button:hover:before {
-    right: 105%;
+    left: 105%;
   }
 }

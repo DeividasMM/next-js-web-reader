@@ -71,7 +71,7 @@
   content: "";
   font-family: "shape divider from ShapeDividers.com";
   position: absolute;
-  z-index: 3;
+  z-index: 1;
   pointer-events: none;
   background-repeat: no-repeat;
   bottom: 0;
@@ -110,6 +110,7 @@
   width: 11rem;
   border-left: 2px dashed white;
   padding-left: 10px;
+  z-index: 4;
 }
 .footer-info h4 {
   font-family: "Anta", serif;
@@ -381,14 +382,14 @@
   height: 150px;
   width: 50px;
   background-color: white;
-  right: -40px;
-  top: -40px;
+  left: -40px;
+  bottom: -40px;
   transform: rotate(37deg);
   transition: all 0.3s;
   opacity: 0.3;
 }
 .input-buttons button:hover:before {
-  right: 105%;
+  left: 105%;
 }
 
 .greek {
@@ -410,6 +411,140 @@
   transform: rotate(15deg);
   filter: blur(3px);
   z-index: -1;
+}
+
+.container {
+  height: 150vh;
+}
+
+.header-container img {
+  z-index: 1;
+  width: 100%;
+  height: 100vh;
+  object-fit: cover;
+  box-shadow: 40px 40px 100px;
+}
+.header-container h1 {
+  font-family: "Anta", serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 80px;
+  letter-spacing: 2px;
+  color: white;
+  padding: 15px;
+  border: 2px solid white;
+  position: absolute;
+  left: 50%;
+  top: 12%;
+  transform: translate(-50%);
+  white-space: nowrap;
+}
+
+.about-container {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
+  padding: 10rem 0rem;
+  width: 75%;
+  z-index: 6;
+}
+.about-container img {
+  height: 50vh;
+  /* From https://css.glass */
+  background: rgba(255, 255, 255, 0.27);
+  border-radius: 8px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(3.5px);
+  -webkit-backdrop-filter: blur(3.5px);
+  border: 2px solid white;
+}
+
+.first-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0px 20px;
+  margin-bottom: 100px;
+  gap: 5rem;
+}
+
+.second-container {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  padding: 0px 20px;
+  gap: 5rem;
+}
+
+.first-text-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border-top: 2px dashed white;
+  border-left: 2px dashed white;
+}
+.first-text-container h2 {
+  font-family: "Anta", serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 30px;
+  letter-spacing: 2px;
+  color: white;
+  margin: 2rem;
+  white-space: nowrap;
+}
+.first-text-container li {
+  font-family: "Anta", serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 15px;
+  letter-spacing: 1px;
+  color: white;
+  list-style: none;
+  text-align: center;
+  margin-bottom: 2rem;
+  margin-left: 3rem;
+  margin-right: 3rem;
+}
+
+.second-text-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border-right: 2px dashed white;
+  border-bottom: 2px dashed white;
+}
+.second-text-container h2 {
+  font-family: "Anta", serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 30px;
+  letter-spacing: 2px;
+  color: white;
+  white-space: nowrap;
+}
+.second-text-container p {
+  font-family: "Anta", serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 15px;
+  letter-spacing: 1px;
+  color: white;
+  text-align: center;
+  padding: 2rem;
+  line-height: 2rem;
+}
+
+.scroll-icon {
+  position: absolute;
+  left: 50%;
+  top: 32%;
+  width: 3rem;
+  height: 3rem;
+  transform: translate(-50%);
+  color: white;
 }
 
 body {

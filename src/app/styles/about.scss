@@ -1,0 +1,109 @@
+@use "variables" as variables;
+@use "mixins" as mixins;
+
+.container {
+  height: 150vh;
+}
+
+.header-container {
+  img {
+    z-index: 1;
+    width: 100%;
+    height: 100vh;
+    object-fit: cover;
+    box-shadow: 40px 40px 100px;
+  }
+
+  h1 {
+    @include mixins.large-text;
+    padding: 15px;
+    border: 2px solid variables.$base-white;
+    position: absolute;
+    left: 50%;
+    top: 12%;
+    transform: translate(-50%);
+    white-space: nowrap;
+  }
+}
+
+.about-container {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%);
+  padding: 10rem 0rem;
+  width: 75%;
+  z-index: 6;
+
+  img {
+    height: 50vh;
+    @include mixins.glassmorphism;
+  }
+}
+
+.first-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0px 20px;
+  margin-bottom: 100px;
+  gap: 5rem;
+}
+
+.second-container {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  padding: 0px 20px;
+  gap: 5rem;
+}
+
+.first-text-container {
+  @include mixins.flex-center;
+  flex-direction: column;
+  border-top: 2px dashed variables.$base-white;
+  border-left: 2px dashed variables.$base-white;
+
+  h2 {
+    @include mixins.header-first-style;
+    margin: 2rem;
+    white-space: nowrap;
+  }
+
+  li {
+    @include mixins.paragraphs;
+    list-style: none;
+    text-align: center;
+    margin-bottom: 2rem;
+    margin-left: 3rem;
+    margin-right: 3rem;
+  }
+}
+
+.second-text-container {
+  @include mixins.flex-center;
+  flex-direction: column;
+  border-right: 2px dashed variables.$base-white;
+  border-bottom: 2px dashed variables.$base-white;
+
+  h2 {
+    @include mixins.header-first-style;
+    white-space: nowrap;
+  }
+
+  p {
+    @include mixins.paragraphs;
+    text-align: center;
+    padding: 2rem;
+    line-height: 2rem;
+  }
+}
+
+.scroll-icon {
+  position: absolute;
+  left: 50%;
+  top: 32%;
+  width: 3rem;
+  height: 3rem;
+  transform: translate(-50%);
+  color: variables.$base-white;
+}

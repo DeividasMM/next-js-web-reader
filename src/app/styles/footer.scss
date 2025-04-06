@@ -22,7 +22,7 @@
   content: "";
   font-family: "shape divider from ShapeDividers.com";
   position: absolute;
-  z-index: 3;
+  z-index: 1;
   pointer-events: none;
   background-repeat: no-repeat;
   bottom: 0;
@@ -56,6 +56,7 @@
     width: 11rem;
     border-left: 2px dashed variables.$base-white;
     padding-left: 10px;
+    z-index: 4;
   }
   h4 {
     @include mixins.header-second-style;
