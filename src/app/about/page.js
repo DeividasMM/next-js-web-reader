@@ -1,77 +1,65 @@
 import React from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 
 function AboutUs() {
-  const containerStyle = {
-    width: "100%",
-    maxWidth: "1200px", 
-    margin: "0 auto",
-    padding: "20px",
-    textAlign: "center",
-  };
-
-  const gridStyle = {
-    display: "grid",
-    gridTemplateColumns: "1fr 1fr",
-    gridTemplateRows: "auto auto", 
-    gap: "20px", 
-    marginBottom: "40px", 
-  };
-
-  const textStyle = {
-    padding: "20px",
-    textAlign: "center",
-    justifyContent: "center",
-    border: "1px solid #ccc",
-    borderRadius: "5px",
-  };
-
-  const imageStyle = {
-    maxWidth: "100%",
-    height: "auto",
-    border: "1px solid #ccc",
-    borderRadius: "5px",
-  };
-
-  const supportStyle = {
-    padding: "20px",
-    textAlign: "center",
-    justifyContent: "center",
-    border: "1px solid #ccc",
-    borderRadius: "5px",
-  };
-
   return (
-    <div style={containerStyle}>
-      <h1>About Us</h1>
-
-      <div style={gridStyle}>
-        <div style={textStyle}>
-          <h2>Our Story</h2>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-            Donec volutpat consequat libero, sed bibendum purus semper ac.
-          </p>
+    <>
+      <div className="container">
+        <div className="header-container">
+          <h1>About Us</h1>
+          <FontAwesomeIcon icon={faChevronDown} className="scroll-icon" />
+          <img src="/assets/images/banner8.png" alt=""></img>
         </div>
 
-        <div>
-          <img src="https://cdn.pixabay.com/photo/2015/04/23/22/00/new-year-background-736885_960_720.jpg" alt="First Image" style={imageStyle}/>
-        </div>
-
-        <div>
-          <img src="https://www.bigfootdigital.co.uk/wp-content/uploads/2020/07/image-optimisation-scaled.jpg" alt="Second Image" style={imageStyle}/>
-        </div>
-
-        <div style={supportStyle}>
-          <h3>Links & Support Us</h3>
-          <p>If you enjoy our content and would like to support our work:</p>
-          <ul>
-            <li><a href="https://github.com" target="_blank" rel="noreferrer">GitHub</a></li>
-            <li><a href="https://patreon.com" target="_blank" rel="noreferrer">Patreon</a></li>
-            <li><a href="https://paypal.me" target="_blank" rel="noreferrer">PayPal</a></li>
-          </ul>
+        <div className="about-container">
+          <div className="first-container">
+            <div className="first-text-container">
+              <h2>Lorem ipsum dolor sit amet</h2>
+              <ul>
+                <li>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin
+                  nisl nisl, auctor id finibus sit amet, mattis nec justo. Sed
+                  mauris diam
+                </li>
+                <li>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin
+                  nisl nisl, auctor id finibus sit amet, mattis nec justo. Sed
+                  mauris diam
+                </li>
+                <li>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin
+                  nisl nisl, auctor id finibus sit amet, mattis nec justo. Sed
+                  mauris diam
+                </li>
+                <li>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin
+                  nisl nisl, auctor id finibus sit amet, mattis nec justo. Sed
+                  mauris diam
+                </li>
+              </ul>
+            </div>
+            <img src="/assets/images/example.png" alt=""></img>
+          </div>
+          <div className="second-container">
+            <div className="second-text-container">
+              <h2>Lorem ipsum dolor sit amet</h2>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin
+                nisl nisl, auctor id finibus sit amet, mattis nec justo. Sed
+                mauris diam, commodo ut lobortis et, sodales ac nisi. Duis
+                volutpat consequat magna vel fringilla. Vivamus odio ipsum,
+                feugiat vitae nunc ac, ornare blandit est. Ut bibendum laoreet
+                dapibus. Nunc quis rhoncus nisl. Mauris lobortis iaculis nunc
+                euismod accumsan.Lorem ipsum dolor sit amet, consectetur
+                adipiscing elit. Proin nisl nisl, auctor.
+              </p>
+            </div>
+            <img src="/assets/images/example.png" alt=""></img>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 
