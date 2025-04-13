@@ -84,115 +84,56 @@ export default function Upload() {
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        height: "100vh",
-      }}
-    >
-      <h1 style={{ position: "absolute", top: "20px", textAlign: "center" }}>
-        Upload your file!
-      </h1>
-
+    <>
+    <div>
+    <img src="/assets/images/greek.png" alt="greek" className="greek"></img>
+    <img src="/assets/images/books.png" alt="books" className="books"></img>
+    </div>
+    <div className="main-container">
       {/* dropzone area */}
-      <div
-        {...getRootProps()}
-        style={{
-          border: "3px dotted black",
-          padding: "40px",
-          width: "550px",
-          height: "300px",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          flexDirection: "column",
-          position: "relative",
-        }}
-      >
+      <div {...getRootProps()} className="drop-zone">
+        <h1 className="header">Upload your file!</h1>
         <input {...getInputProps()} />
 
-        <FontAwesomeIcon
-          icon={faDownload}
-          style={{ fontSize: "40px", marginBottom: "10px" }}
-        />
+        <FontAwesomeIcon icon={faDownload} className="white-icons" />
 
-        <div style={{ textAlign: "center" }}>
-          <p style={{ marginBottom: "10px" }}>Format: PDF only</p>
-          <p style={{ fontSize: "12px" }}>File cannot exceed 10MB.</p>
+        <div className="drop-zone-content">
+          <p>Format: PDF only</p>
+          <p>File cannot exceed 10MB.</p>
         </div>
 
         {file && (
-          <div
-            style={{
-              position: "absolute",
-              bottom: "10px",
-              textAlign: "center",
-              width: "540px",
-            }}
-          >
+          <div className="drop-zone-upload">
             {/* uploaded file + pdf svg display*/}
-            <FontAwesomeIcon
-              icon={faFilePdf}
-              style={{ fontSize: "35px", marginBottom: "5px" }}
-            />
-            <p style={{ fontSize: "16px" }}>{file.name}</p>
+            <FontAwesomeIcon icon={faFilePdf} className="white-icons" />
+            <p>{file.name}</p>
           </div>
         )}
       </div>
 
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          width: "550px",
-        }}
-      >
+      <div>
         {/* title input */}
         <input
+          className="input-title"
           type="text"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          style={{
-            marginTop: "10px",
-            marginBottom: "15px",
-            padding: "12px",
-            width: "550px",
-            height: "46px",
-          }}
           placeholder="Title"
         />
 
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            gap: "20px",
-            width: "550px",
-          }}
-        >
+        <div className="input-author-selection">
           {/* author input */}
           <input
+            className="input-author"
             type="text"
             value={author}
             onChange={(e) => setAuthor(e.target.value)}
-            style={{
-              flex: "1",
-              padding: "12px",
-              height: "46px",
-            }}
             placeholder="Author"
           />
 
           {/* Select dropdown */}
           <select
-            style={{
-              flex: "1",
-              padding: "12px",
-              height: "46px",
-            }}
+            className="input-selection"
             value={selectedOption}
             onChange={(e) => setSelectedOption(e.target.value)}
           >
@@ -214,38 +155,18 @@ export default function Upload() {
           </select>
         </div>
 
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            width: "550px",
-            marginTop: "15px",
-          }}
-        >
+        <div className="input-buttons">
           {/* submit button */}
-          <button
-            style={{
-              padding: "10px 15px",
-              textAlign: "center",
-              width: "130px",
-            }}
-            onClick={handleSubmit}
-          >
+          <button onClick={handleSubmit} className="input-button">
             Submit
           </button>
           {/* remove button */}
-          <button
-            style={{
-              padding: "10px 15px",
-              textAlign: "center",
-              width: "130px",
-            }}
-            onClick={removeFile}
-          >
+          <button onClick={removeFile}>
             Remove
           </button>
         </div>
       </div>
     </div>
+    </>
   );
 }

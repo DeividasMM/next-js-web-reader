@@ -1,7 +1,46 @@
-@use 'home';
-@use 'mixins';
-@use 'variables';
-@use 'footer';
-@use 'navBar';
+@use "home";
+@use "mixins";
+@use "variables";
+@use "footer";
+@use "navBar";
+@use "upload";
+@use "about";
 
 @import url("https://fonts.googleapis.com/css2?family=Anta&display=swap");
+
+body {
+  position: relative;
+  margin: 0;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: -20px;
+  left: -20px;
+  right: -20px;
+  bottom: -20px;
+  background: radial-gradient(
+      circle farthest-corner at 50% 100%,
+      #cccccced 0% 18%,
+      #8c8c8ced 18%,
+      #a6a6a6ed 22% 36%,
+      #737373ed 36%,
+      #808080ed 40% 54%,
+      #474747ed 54%,
+      #4d4d4ded 58% 72%,
+      #1f1f1fed 72%,
+      #262626ed 76% 90%,
+      #0d0d0ded 90% 90%
+    ),
+    radial-gradient(
+      circle farthest-corner at 0% 50%,
+      #ff0040ff 0%,
+      #ff00ffff 100%
+    ),
+    linear-gradient(to top, #ffa100ff 0%, #66e6ffff 100%);
+  background-blend-mode: multiply;
+  filter: blur(4px);
+  z-index: -1;
+}

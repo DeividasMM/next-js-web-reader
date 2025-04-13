@@ -14,7 +14,7 @@ export default function Home() {
         <div>
           <a href="#">
             <FontAwesomeIcon icon={faCirclePlay} className="white-icons" />
-            Start using READ · Y now!
+            Check our Web Reader's tutorials now!
           </a>
         </div>
       </div>
