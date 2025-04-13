@@ -7,74 +7,78 @@ import "react-pdf/dist/Page/TextLayer.css";
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
 export default function Reading() {
-  const [iseditable, setiseditable] = useState(false);
-  const [title, settitle] = useState(
+  const [isEditable, setIsEditable] = useState(false);
+  const [title, setTitle] = useState(
     "Research suggests that timed tests cause math anxiety"
   );
-  const [author, setauthor] = useState("Jo Boaler");
-  const [zenmode, setzenmode] = useState(false);
-  const [darkmode, setdarkmode] = useState(false);
-  const [annotations, setannotations] = useState([]);
+  const [author, setAuthor] = useState("Jo Boaler");
+  const [zenMode, setZenMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(false);
+  const [annotations, setAnnotations] = useState([]);
   const [numPages, setNumPages] = useState(null);
-  const annotationinputref = useRef(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const annotationInputRef = useRef(null);
 
   useEffect(() => {
-    const storeddarkmode = localStorage.getItem("dark_mode");
-    if (storeddarkmode !== null) {
-      setdarkmode(JSON.parse(storeddarkmode));
+    const storedDarkMode = localStorage.getItem("darkMode");
+    if (storedDarkMode !== null) {
+      setDarkMode(JSON.parse(storedDarkMode));
     }
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("dark_mode", JSON.stringify(darkmode));
-  }, [darkmode]);
+    localStorage.setItem("darkMode", JSON.stringify(darkMode));
+  }, [darkMode]);
 
-  const toggleedit = () => setiseditable((prev) => !prev);
-  const handletitlechange = (e) => settitle(e.target.innerText);
-  const handleauthorchange = (e) => setauthor(e.target.innerText);
+  const toggleEdit = () => setIsEditable((prev) => !prev);
+  const handleTitleChange = (e) => setTitle(e.target.innerText);
+  const handleAuthorChange = (e) => setAuthor(e.target.innerText);
 
-  const togglezenmode = () => {
-    setzenmode((prev) => !prev);
-    setiseditable(false);
+  const toggleZenMode = () => {
+    setZenMode((prev) => !prev);
+    setIsEditable(false);
   };
 
-  const toggledarkmode = () => setdarkmode((prev) => !prev);
+  const toggleDarkMode = () => setDarkMode((prev) => !prev);
 
-  const savechanges = () => {
+  const saveChanges = () => {
     alert("Changes saved successfully!");
   };
 
-  const addannotation = (event) => {
+  const addAnnotation = (event) => {
     if (
       event.type === "click" ||
       (event.type === "keydown" && event.key === "Enter")
     ) {
-      const text = annotationinputref.current.value;
+      const text = annotationInputRef.current.value;
       if (text.trim()) {
-        setannotations([...annotations, { text, isediting: false }]);
-        annotationinputref.current.value = "";
+        setAnnotations([
+          ...annotations,
+          { text, isEditable: true, isEditing: false },
+        ]);
+        annotationInputRef.current.value = "";
       }
     }
   };
 
-  const deleteannotation = (index) => {
-    setannotations(annotations.filter((_, i) => i !== index));
+  const deleteAnnotation = (index) => {
+    setAnnotations(annotations.filter((_, i) => i !== index));
   };
 
-  const toggleeditannotation = (index) => {
-    setannotations(
+  const toggleEditAnnotation = (index) => {
+    setAnnotations(
       annotations.map((annotation, i) =>
-        i === index
-          ? { ...annotation, isediting: !annotation.isediting }
+        i === index && annotation.isEditable
+          ? { ...annotation, isEditing: !annotation.isEditing }
           : annotation
       )
     );
   };
 
-  const updateannotation = (index, newtext) => {
-    setannotations(
+  const updateAnnotation = (index, newText) => {
+    setAnnotations(
       annotations.map((annotation, i) =>
-        i === index ? { ...annotation, text: newtext } : annotation
+        i === index ? { ...annotation, text: newText } : annotation
       )
     );
   };
@@ -87,12 +91,20 @@ export default function Reading() {
     const selection = window.getSelection();
     const selectedText = selection.toString().trim();
     if (selectedText) {
-      setannotations([
+      setAnnotations([
         ...annotations,
-        { text: selectedText, isediting: false },
+        { text: selectedText, isEditable: false, isEditing: false },
       ]);
       selection.removeAllRanges();
     }
+  };
+
+  const goToPrevPage = () => {
+    setCurrentPage((prev) => Math.max(prev - 1, 1));
+  };
+
+  const goToNextPage = () => {
+    setCurrentPage((prev) => Math.min(prev + 1, numPages || prev));
   };
 
   return (
@@ -102,8 +114,8 @@ export default function Reading() {
         justifyContent: "center",
         alignItems: "flex-start",
         flexDirection: "row",
-        background: darkmode ? "#121212" : "white",
-        color: darkmode ? "white" : "black",
+        background: darkMode ? "#121212" : "white",
+        color: darkMode ? "white" : "black",
       }}
     >
       <section
@@ -127,56 +139,82 @@ export default function Reading() {
         >
           <div>
             <h1
-              contentEditable={iseditable}
+              contentEditable={isEditable}
               suppressContentEditableWarning={true}
-              onInput={handletitlechange}
+              onInput={handleTitleChange}
               style={{ margin: "0" }}
             >
               {title}
             </h1>
             <h4
-              contentEditable={iseditable}
+              contentEditable={isEditable}
               suppressContentEditableWarning={true}
-              onInput={handleauthorchange}
+              onInput={handleAuthorChange}
               style={{ margin: "0" }}
             >
               {author}
             </h4>
           </div>
-          {zenmode ? (
-            <button onClick={togglezenmode}>Exit Zen</button>
+          {zenMode ? (
+            <button onClick={toggleZenMode}>Exit Zen</button>
           ) : (
             <>
-              <button onClick={toggleedit}>🔓</button>
-              <button onClick={savechanges}>📤</button>
-              <button onClick={togglezenmode}>Zen Mode</button>
-              <button onClick={toggledarkmode}>
-                {darkmode ? "Light Mode" : "Dark Mode"}
+              <button onClick={toggleEdit}>🔓</button>
+              <button onClick={saveChanges}>📤</button>
+              <button onClick={toggleZenMode}>Zen Mode</button>
+              <button onClick={toggleDarkMode}>
+                {darkMode ? "Light Mode" : "Dark Mode"}
               </button>
               <button onClick={extractSelectedText}>Extract Selection</button>
             </>
           )}
         </header>
 
+        <div
+          style={{
+            width: "1000px",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: "20px",
+            marginBottom: "10px",
+          }}
+        >
+          <button
+            onClick={goToPrevPage}
+            disabled={currentPage === 1}
+            style={{ padding: "5px 10px" }}
+          >
+            Previous
+          </button>
+          <span>
+            Page {currentPage} of {numPages || "?"}
+          </span>
+          <button
+            onClick={goToNextPage}
+            disabled={currentPage === numPages}
+            style={{ padding: "5px 10px" }}
+          >
+            Next
+          </button>
+        </div>
+
         <div style={{ width: "1000px", height: "1100px", overflowY: "auto" }}>
           <Document
             file="./assets/videos/test.pdf"
             onLoadSuccess={onDocumentLoadSuccess}
           >
-            {Array.from(new Array(numPages), (el, index) => (
-              <Page
-                key={`page_${index + 1}`}
-                pageNumber={index + 1}
-                width={1000}
-                renderTextLayer={true}
-                renderAnnotationLayer={true}
-              />
-            ))}
+            <Page
+              pageNumber={currentPage}
+              width={1000}
+              renderTextLayer={true}
+              renderAnnotationLayer={true}
+            />
           </Document>
         </div>
       </section>
 
-      {!zenmode && (
+      {!zenMode && (
         <section
           style={{
             border: "1px solid red",
@@ -189,6 +227,7 @@ export default function Reading() {
             display: "flex",
             flexDirection: "column",
             justifyContent: "flex-end",
+            background: darkMode ? "#1e1e1e" : "white",
           }}
         >
           <h2 style={{ marginBottom: "15px" }}>Annotations</h2>
@@ -205,30 +244,49 @@ export default function Reading() {
                 key={index}
                 style={{
                   marginBottom: "15px",
-                  paddingLeft: "5px",
+                  padding: "10px",
                   display: "flex",
-                  alignItems: "center",
+                  flexDirection: "column",
                   gap: "10px",
                   border: "1px solid #ccc",
-                  padding: "10px",
                   position: "relative",
                   maxWidth: "250px",
+                  backgroundColor: annotation.isEditable
+                    ? darkMode
+                      ? "#8b6f47"
+                      : "#d2b48c"
+                    : darkMode
+                    ? "#b3b300"
+                    : "#ffff99",
                 }}
               >
-                {annotation.isediting ? (
-                  <input
-                    type="text"
-                    value={annotation.text}
-                    onChange={(e) => updateannotation(index, e.target.value)}
-                    style={{
-                      padding: "5px",
-                      width: "100%",
-                      marginRight: "10px",
-                    }}
-                  />
-                ) : (
-                  annotation.text
-                )}
+                <div
+                  style={{
+                    wordBreak: "break-word",
+                    overflowWrap: "break-word",
+                    whiteSpace: "pre-wrap",
+                    flex: 1,
+                    paddingRight: "40px",
+                  }}
+                >
+                  {annotation.isEditing && annotation.isEditable ? (
+                    <input
+                      type="text"
+                      value={annotation.text}
+                      onChange={(e) => updateAnnotation(index, e.target.value)}
+                      style={{
+                        padding: "5px",
+                        width: "100%",
+                        boxSizing: "border-box",
+                        background: darkMode ? "#333" : "white",
+                        color: darkMode ? "white" : "black",
+                        border: "1px solid #ccc",
+                      }}
+                    />
+                  ) : (
+                    annotation.text
+                  )}
+                </div>
                 <div
                   style={{
                     position: "absolute",
@@ -238,17 +296,39 @@ export default function Reading() {
                     gap: "5px",
                   }}
                 >
-                  <button onClick={() => toggleeditannotation(index)}>
-                    ✏️
+                  {annotation.isEditable && (
+                    <button
+                      onClick={() => toggleEditAnnotation(index)}
+                      style={{
+                        background: darkMode ? "#444" : "white",
+                        color: darkMode ? "white" : "black",
+                        border: "1px solid #ccc",
+                        padding: "2px 5px",
+                        cursor: "pointer",
+                      }}
+                    >
+                      ✏️
+                    </button>
+                  )}
+                  <button
+                    onClick={() => deleteAnnotation(index)}
+                    style={{
+                      background: darkMode ? "#444" : "white",
+                      color: darkMode ? "white" : "black",
+                      border: "1px solid #ccc",
+                      padding: "2px 5px",
+                      cursor: "pointer",
+                    }}
+                  >
+                    🗑️
                   </button>
-                  <button onClick={() => deleteannotation(index)}>🗑️</button>
                 </div>
               </li>
             ))}
           </ul>
           <div style={{ position: "relative" }}>
             <textarea
-              ref={annotationinputref}
+              ref={annotationInputRef}
               style={{
                 border: "1px solid #ccc",
                 padding: "10px",
@@ -257,12 +337,14 @@ export default function Reading() {
                 marginBottom: "15px",
                 marginTop: "10px",
                 resize: "none",
+                background: darkMode ? "#333" : "white",
+                color: darkMode ? "white" : "black",
               }}
               placeholder="Write annotation"
-              onKeyDown={addannotation}
+              onKeyDown={addAnnotation}
             />
             <button
-              onClick={addannotation}
+              onClick={addAnnotation}
               style={{
                 position: "absolute",
                 bottom: "20px",
@@ -271,6 +353,7 @@ export default function Reading() {
                 border: "none",
                 cursor: "pointer",
                 fontSize: "20px",
+                color: darkMode ? "white" : "black",
               }}
             >
               ➡️
