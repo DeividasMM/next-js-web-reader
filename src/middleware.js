@@ -13,7 +13,7 @@ export default clerkMiddleware(async (auth, req) => {
 
   const { userId, sessionClaims } = await auth();
 
-  console.log("🚩 Full sessionClaims:", sessionClaims);
+  // console.log("🚩 Full sessionClaims:", sessionClaims);
 
   if (userId) {
     const email = sessionClaims?.email || "NO-VERIFIED@example.com";
