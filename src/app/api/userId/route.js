@@ -1,6 +1,6 @@
 import { auth } from "@clerk/nextjs";
 
-export default function handler(req, res) {
+export default function getUserId(req, res) {
   const { userId } = auth();
 
   if (!userId) {

@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 
 export async function GET() {
   try {
-    const result = await turso.execute("SELECT * FROM test");
+    const result = await turso.execute("SELECT * FROM users");
     if (!result || !result.rows) {
       return NextResponse.json(
         { error: "No data returned from database" },
