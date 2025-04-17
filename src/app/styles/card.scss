@@ -1,0 +1,77 @@
+@use "variables" as variables;
+@use "mixins" as mixins;
+
+.card {
+  position: relative;
+  width: 15rem;
+  height: 20rem;
+  background: variables.$darker-white;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+  border: 1px solid variables.$grey-white;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0px;
+    width: 35rem;
+    height: 100%;
+    transform: skewX(60deg);
+    background-image: variables.$pink-gradient;
+    transition: ease-in-out 0.5s;
+  }
+
+  &:hover {
+    &::before {
+      top: -200px;
+    }
+    .reading-link {
+      top: -50px;
+      opacity: 1;
+    }
+    .content-box {
+        h3 {
+            color: variables.$base-black;
+        }
+        p {
+            color: variables.$base-black;
+        }
+    }
+  }
+
+  .content-box {
+    position: relative;
+    height: 100%;
+    padding: 20px;
+    @include mixins.flex-center;
+    flex-direction: column;
+    text-align: center;
+
+    h3 {
+      @include mixins.header-second-style;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      transition: ease-in-out 0.5s;
+    }
+
+    p {
+      @include mixins.paragraphs;
+      margin-bottom: 20px;
+      transition: ease-in-out 0.5s;
+    }
+  }
+
+  .reading-link {
+    left: 2rem;
+    opacity: 0;
+    position: relative;
+    top: 20px;
+    padding: 10px 30px;
+    background-image: variables.$pink-gradient;
+    text-decoration: none;
+    @include mixins.paragraphs;
+    border-radius: 30px;
+    transition: ease-in-out 0.5s;
+  }
+}

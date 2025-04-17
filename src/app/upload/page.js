@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useDropzone } from "react-dropzone";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { faFilePdf, faDownload } from "@fortawesome/free-solid-svg-icons";
 
 export default function Upload() {
@@ -72,6 +73,13 @@ export default function Upload() {
         <img src="/assets/images/greek.png" alt="greek" className="greek"></img>
         <img src="/assets/images/books.png" alt="books" className="books"></img>
       </div>
+
+      <div className="header-container">
+        <h1>Upload Your Files</h1>
+        <FontAwesomeIcon icon={faChevronDown} className="scroll-icon" />
+        <img src="/assets/images/banner8.png" alt=""></img>
+      </div>
+
       <div className="main-container">
         {/* dropzone area */}
         <div {...getRootProps()} className="drop-zone">
@@ -144,7 +152,9 @@ export default function Upload() {
               Submit
             </button>
             {/* remove button */}
-            <button onClick={removeFile}>Remove</button>
+            <button onClick={removeFile} className="input-button">
+              Remove
+            </button>
           </div>
         </div>
       </div>
