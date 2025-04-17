@@ -52,7 +52,7 @@ export default function Upload() {
     formData.append("genre", selectedOption);
 
     try {
-      const response = await fetch("http://localhost:3000/api/upload", {
+      const response = await fetch("http://localhost:3000/api/postUpload", {
         method: "POST",
         body: formData,
       });
