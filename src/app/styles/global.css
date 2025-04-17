@@ -5,6 +5,10 @@
   box-sizing: border-box;
 }
 
+.test {
+  height: 100vh;
+}
+
 .container-home {
   display: flex;
   justify-content: center;
@@ -62,7 +66,7 @@
 .shapedividers_com-6161 {
   overflow: hidden;
   position: relative;
-  height: 115vh;
+  height: 15vh;
   bottom: 0;
   left: 0;
 }
@@ -211,11 +215,12 @@
 }
 
 .main-container {
-  position: absolute;
-  top: 10%;
+  position: relative;
+  margin-top: 7rem;
   left: 50%;
   transform: translate(-50%);
-  z-index: 1;
+  height: 85vh;
+  width: 34.5rem;
 }
 
 .drop-zone {
@@ -353,7 +358,7 @@
   margin-top: 15px;
 }
 
-.input-buttons button {
+.input-button {
   text-align: center;
   display: inline-block;
   padding: 15px 40px;
@@ -376,7 +381,7 @@
   letter-spacing: 1px;
   color: white;
 }
-.input-buttons button::before {
+.input-button::before {
   content: "";
   position: absolute;
   height: 150px;
@@ -388,7 +393,7 @@
   transition: all 0.3s;
   opacity: 0.3;
 }
-.input-buttons button:hover:before {
+.input-button:hover::before {
   left: 105%;
 }
 
@@ -397,7 +402,7 @@
   width: 300px;
   height: 600px;
   right: -50px;
-  top: 20vh;
+  top: 45%;
   transform: rotate(-37deg);
   filter: blur(3px);
 }
@@ -406,19 +411,14 @@
   position: absolute;
   width: 250px;
   height: 400px;
-  bottom: 20%;
+  bottom: 12%;
   left: 8%;
   transform: rotate(15deg);
   filter: blur(3px);
   z-index: -1;
 }
 
-.container {
-  height: 150vh;
-}
-
 .header-container img {
-  z-index: 1;
   width: 100%;
   height: 100vh;
   object-fit: cover;
@@ -435,18 +435,19 @@
   border: 2px solid white;
   position: absolute;
   left: 50%;
-  top: 12%;
+  top: 20rem;
   transform: translate(-50%);
   white-space: nowrap;
 }
 
 .about-container {
-  position: absolute;
+  position: relative;
   left: 50%;
   transform: translate(-50%);
   padding: 10rem 0rem;
   width: 75%;
   z-index: 6;
+  height: 150vh;
 }
 .about-container img {
   height: 50vh;
@@ -540,11 +541,165 @@
 .scroll-icon {
   position: absolute;
   left: 50%;
-  top: 32%;
+  top: 45rem;
   width: 3rem;
   height: 3rem;
   transform: translate(-50%);
   color: white;
+}
+
+.input-selection-library {
+  /* From https://css.glass */
+  background: rgba(255, 255, 255, 0.27);
+  border-radius: 8px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(3.5px);
+  -webkit-backdrop-filter: blur(3.5px);
+  border: 2px solid white;
+  font-family: "Anta", serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 15px;
+  letter-spacing: 1px;
+  color: white;
+  height: 3rem;
+  text-align: center;
+  position: absolute;
+  right: 3.5rem;
+  margin-top: 3.5rem;
+  z-index: 6;
+}
+.input-selection-library option {
+  color: black;
+  background-color: rgb(242, 240, 239);
+}
+
+.books-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: left;
+  width: 90%;
+  position: relative;
+  left: 7.5rem;
+  top: 10rem;
+  gap: 2.5rem;
+  margin-bottom: 15rem;
+}
+
+.greek2 {
+  position: absolute;
+  width: 450px;
+  height: 800px;
+  right: -50px;
+  top: 40%;
+  transform: rotate(-25deg);
+  filter: blur(3px);
+  z-index: -1;
+}
+
+.greek3 {
+  position: absolute;
+  width: 350px;
+  height: 650px;
+  bottom: 10%;
+  left: 8%;
+  transform: rotate(5deg);
+  filter: blur(3px);
+  z-index: -1;
+}
+
+.greek4 {
+  position: absolute;
+  width: 350px;
+  height: 350px;
+  top: 32%;
+  left: 20%;
+  transform: rotate(160deg);
+  filter: blur(3px);
+  z-index: -1;
+}
+
+.card {
+  position: relative;
+  width: 15rem;
+  height: 20rem;
+  background: rgb(228, 228, 228);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+  border: 1px solid #797877;
+}
+.card::before {
+  content: "";
+  position: absolute;
+  top: 0px;
+  width: 35rem;
+  height: 100%;
+  transform: skewX(60deg);
+  background-image: radial-gradient(circle 986.6px at 10% 20%, rgba(251, 6, 6, 0.94) 0%, rgb(3, 31, 213) 82.8%, rgb(248, 101, 248) 87.9%);
+  transition: ease-in-out 0.5s;
+}
+.card:hover::before {
+  top: -200px;
+}
+.card:hover .reading-link {
+  top: -50px;
+  opacity: 1;
+}
+.card:hover .content-box h3 {
+  color: #191919;
+}
+.card:hover .content-box p {
+  color: #191919;
+}
+.card .content-box {
+  position: relative;
+  height: 100%;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+}
+.card .content-box h3 {
+  font-family: "Anta", serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 20px;
+  letter-spacing: 2px;
+  color: white;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  transition: ease-in-out 0.5s;
+}
+.card .content-box p {
+  font-family: "Anta", serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 15px;
+  letter-spacing: 1px;
+  color: white;
+  margin-bottom: 20px;
+  transition: ease-in-out 0.5s;
+}
+.card .reading-link {
+  left: 2rem;
+  opacity: 0;
+  position: relative;
+  top: 20px;
+  padding: 10px 30px;
+  background-image: radial-gradient(circle 986.6px at 10% 20%, rgba(251, 6, 6, 0.94) 0%, rgb(3, 31, 213) 82.8%, rgb(248, 101, 248) 87.9%);
+  text-decoration: none;
+  font-family: "Anta", serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 15px;
+  letter-spacing: 1px;
+  color: white;
+  border-radius: 30px;
+  transition: ease-in-out 0.5s;
 }
 
 body {

@@ -1,4 +1,11 @@
 $base-white: white;
 $shade-white: rgb(242, 240, 239);
+$darker-white: rgb(228, 228, 228);
 $grey-white: #797877;
 $base-black: #191919;
+$pink-gradient: radial-gradient(
+  circle 986.6px at 10% 20%,
+  rgba(251, 6, 6, 0.94) 0%,
+  rgba(3, 31, 213, 1) 82.8%,
+  rgba(248, 101, 248, 1) 87.9%
+);
