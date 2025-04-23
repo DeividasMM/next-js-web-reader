@@ -1,4 +1,6 @@
-export default function Card({ title, author }) {
+import Link from "next/link";
+
+export default function Card({ id, title, author }) {
   return (
     <>
       <div className="card">
@@ -6,9 +8,9 @@ export default function Card({ title, author }) {
           <h3>{title}</h3>
           <p>{author}</p>
         </div>
-        <a href="/reading" className="reading-link">
+        <Link href={`/library/${id}/reading`} className="reading-link">
           Start to read!
-        </a>
+        </Link>
       </div>
     </>
   );

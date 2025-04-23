@@ -48,43 +48,15 @@ export default function Library() {
           <img src="/assets/images/banner8.png" alt=""></img>
         </div>
 
-        <select className="input-selection-library">
-          <option value="">Select Category</option>
-          <option value="fantasy">Fantasy</option>
-          <option value="science-fiction">Science Fiction</option>
-          <option value="mystery">Mystery</option>
-          <option value="romance">Romance</option>
-          <option value="historical-fiction">Historical Fiction</option>
-          <option value="thriller">Thriller</option>
-          <option value="horror">Horror</option>
-          <option value="adventure">Adventure</option>
-          <option value="biography">Biography</option>
-          <option value="business">Business & Finance</option>
-          <option value="health">Health & Wellness</option>
-          <option value="history">History</option>
-          <option value="science">Science & Technology</option>
-          <option value="philosophy">Philosophy</option>
-        </select>
-
         <div className="books-container">
           {books.map((item) => (
-            <Card key={item.pdf_id} title={item.title} author={item.author} />
+            <Card
+              key={item.pdf_id}
+              id={item.pdf_id}
+              title={item.title}
+              author={item.author}
+            />
           ))}
-          {/* <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card /> */}
         </div>
       </div>
     </>
