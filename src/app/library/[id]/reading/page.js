@@ -11,7 +11,6 @@ export default function Reading() {
   const [title, setTitle] = useState("Title");
   const [author, setAuthor] = useState("Author");
   const [pdf, setPdf] = useState(null);
-
   const [isEditable, setIsEditable] = useState(false);
   const [zenMode, setZenMode] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
@@ -19,7 +18,6 @@ export default function Reading() {
   const [numPages, setNumPages] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const annotationInputRef = useRef(null);
-
   const { id } = useParams();
   const [data, setData] = useState(null);
 
@@ -31,7 +29,13 @@ export default function Reading() {
 
       if (data.title) setTitle(data.title);
       if (data.author) setAuthor(data.author);
-      if (data.pdf_file) setPdf(data.pdf_file);
+      if (data.pdf_file) {
+        setPdf(
+          data.pdf_file.startsWith("data:application/pdf;base64,")
+            ? data.pdf_file
+            : `data:application/pdf;base64,${data.pdf_file}`
+        );
+      }
     }
 
     if (id) {
@@ -221,14 +225,18 @@ export default function Reading() {
         </div>
 
         <div style={{ width: "1000px", height: "1100px", overflowY: "auto" }}>
-          <Document file="./test.pdf" onLoadSuccess={onDocumentLoadSuccess}>
-            <Page
-              pageNumber={currentPage}
-              width={1000}
-              renderTextLayer={true}
-              renderAnnotationLayer={true}
-            />
-          </Document>
+          {pdf ? (
+            <Document file={pdf} onLoadSuccess={onDocumentLoadSuccess}>
+              <Page
+                pageNumber={currentPage}
+                width={1000}
+                renderTextLayer={true}
+                renderAnnotationLayer={true}
+              />
+            </Document>
+          ) : (
+            <p>Loading PDF...</p>
+          )}
         </div>
       </section>
 
