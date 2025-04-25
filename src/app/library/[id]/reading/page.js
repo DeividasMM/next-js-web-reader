@@ -10,6 +10,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/b
 export default function Reading() {
   const [title, setTitle] = useState("Title");
   const [author, setAuthor] = useState("Author");
+  const [category, setCategory] = useState("");
   const [pdf, setPdf] = useState(null);
   const [isEditable, setIsEditable] = useState(false);
   const [zenMode, setZenMode] = useState(false);
@@ -29,6 +30,7 @@ export default function Reading() {
 
       if (data.title) setTitle(data.title);
       if (data.author) setAuthor(data.author);
+      if (data.category) setCategory(data.category);
       if (data.pdf_file) {
         setPdf(
           data.pdf_file.startsWith("data:application/pdf;base64,")
@@ -58,6 +60,7 @@ export default function Reading() {
   const toggleEdit = () => setIsEditable((prev) => !prev);
   const handleTitleChange = (e) => setTitle(e.target.innerText);
   const handleAuthorChange = (e) => setAuthor(e.target.innerText);
+  const handleCategoryChange = (e) => setCategory(e.target.value);
 
   const toggleZenMode = () => {
     setZenMode((prev) => !prev);
@@ -179,6 +182,55 @@ export default function Reading() {
             >
               {author}
             </h4>
+            {isEditable ? (
+              <select
+                value={category}
+                onChange={handleCategoryChange}
+                style={{
+                  padding: "5px",
+                  background: darkMode ? "#333" : "white",
+                  color: darkMode ? "white" : "black",
+                  border: "1px solid #ccc",
+                  marginTop: "5px",
+                }}
+              >
+                <option value="">Select Category</option>
+                <option value="adventure">Adventure</option>
+                <option value="biography">Biography</option>
+                <option value="business-finance">Business & Finance</option>
+                <option value="fantasy">Fantasy</option>
+                <option value="health-wellness">Health & Wellness</option>
+                <option value="historical-fiction">Historical Fiction</option>
+                <option value="history">History</option>
+                <option value="horror">Horror</option>
+                <option value="information-technology">Information Technology</option>
+                <option value="manga">Manga</option>
+                <option value="mystery">Mystery</option>
+                <option value="paper">Paper</option>
+                <option value="philosophy">Philosophy</option>
+                <option value="report">Report</option>
+                <option value="research">Research</option>
+                <option value="romance">Romance</option>
+                <option value="science-technology">Science & Technology</option>
+                <option value="science-fiction">Science Fiction</option>
+                <option value="scientific-work">Scientific Work</option>
+                <option value="summary">Summary</option>
+                <option value="thriller">Thriller</option>
+                <option value="other">Other</option>
+              </select>
+            ) : (
+              <p style={{ margin: "0", color: darkMode ? "white" : "black" }}>
+                {category === "science-technology" ? "Science & Technology" :
+                 category === "health-wellness" ? "Health & Wellness" :
+                 category === "business-finance" ? "Business & Finance" :
+                 category ? 
+                   category
+                     .split('-')
+                     .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                     .join(' ') : 
+                   "No category selected"}
+              </p>
+            )}
           </div>
           {zenMode ? (
             <button onClick={toggleZenMode}>Exit Zen</button>
@@ -195,6 +247,21 @@ export default function Reading() {
           )}
         </header>
 
+        <div style={{ width: "1000px", height: "1100px", overflowY: "auto" }}>
+          {pdf ? (
+            <Document file={pdf} onLoadSuccess={onDocumentLoadSuccess}>
+              <Page
+                pageNumber={currentPage}
+                width={1000}
+                renderTextLayer={true}
+                renderAnnotationLayer={true}
+              />
+            </Document>
+          ) : (
+            <p>Loading PDF...</p>
+          )}
+        </div>
+
         <div
           style={{
             width: "1000px",
@@ -202,6 +269,7 @@ export default function Reading() {
             justifyContent: "center",
             alignItems: "center",
             gap: "20px",
+            marginTop: "10px",
             marginBottom: "10px",
           }}
         >
@@ -222,21 +290,6 @@ export default function Reading() {
           >
             Next
           </button>
-        </div>
-
-        <div style={{ width: "1000px", height: "1100px", overflowY: "auto" }}>
-          {pdf ? (
-            <Document file={pdf} onLoadSuccess={onDocumentLoadSuccess}>
-              <Page
-                pageNumber={currentPage}
-                width={1000}
-                renderTextLayer={true}
-                renderAnnotationLayer={true}
-              />
-            </Document>
-          ) : (
-            <p>Loading PDF...</p>
-          )}
         </div>
       </section>
 
