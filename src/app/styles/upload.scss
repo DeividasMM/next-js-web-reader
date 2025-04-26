@@ -2,11 +2,12 @@
 @use "mixins" as mixins;
 
 .main-container {
-  position: absolute;
-  top: 10%;
+  position: relative;
+  margin-top: 7rem;
   left: 50%;
   transform: translate(-50%);
-  z-index: 1;
+  height: 85vh;
+  width: 34.5rem;
 }
 
 .drop-zone {
@@ -86,7 +87,7 @@
   margin-top: 15px;
 }
 
-.input-buttons {
+.input-button {
   @include mixins.buttons;
 }
 
@@ -95,7 +96,7 @@
     width: 300px;
     height: 600px;
     right: -50px;
-    top: 20vh;
+    top: 45%;
     transform: rotate(-37deg);
     filter: blur(3px);
 }
@@ -104,7 +105,7 @@
     position: absolute;
     width: 250px;
     height: 400px;
-    bottom: 20%;
+    bottom: 12%;
     left: 8%;
     transform: rotate(15deg);
     filter: blur(3px);

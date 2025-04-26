@@ -1,9 +1,16 @@
-import { turso } from "../../../lib/turso";
+import { turso } from "@/lib/turso";
 import { NextResponse } from "next/server";
+
+import { auth } from "@clerk/nextjs/server";
 
 export async function GET() {
   try {
-    const result = await turso.execute("SELECT * FROM users");
+    const { userId } = await auth();
+
+    const result = await turso.execute({
+      sql: `SELECT * FROM pdfs WHERE user_id = ?`,
+      args: [userId],
+    });
     if (!result || !result.rows) {
       return NextResponse.json(
         { error: "No data returned from database" },

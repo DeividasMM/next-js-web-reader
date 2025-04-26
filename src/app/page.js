@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCirclePlay } from "@fortawesome/free-solid-svg-icons";
 
-export default function Home() {
+export default async function Home() {
   return (
     <>
       <video
@@ -18,6 +18,7 @@ export default function Home() {
           </a>
         </div>
       </div>
+      <div className="test">&nbsp;</div>
     </>
   );
 }

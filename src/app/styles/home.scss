@@ -6,6 +6,10 @@
   box-sizing: border-box;
 }
 
+.test {
+  height: 100vh;
+}
+
 .container-home {
   @include mixins.flex-center;
   position: fixed;

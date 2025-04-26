@@ -1,0 +1,56 @@
+@use "variables" as variables;
+@use "mixins" as mixins;
+
+.input-selection-library {
+  @include mixins.input-selection;
+    position: absolute;
+    right: 3.5rem;
+    margin-top: 3.5rem;
+    z-index: 6;
+}
+
+.books-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: left;
+  width: 90%;
+  position: relative;
+  left: 7.5rem;
+  top: 10rem;
+  gap: 2.5rem;
+  margin-bottom: 15rem;
+}
+
+.greek2 {
+  position: absolute;
+  width: 450px;
+  height: 800px;
+  right: -50px;
+  top: 40%;
+  transform: rotate(-25deg);
+  filter: blur(3px);
+  z-index: -1;
+}
+
+.greek3 {
+  position: absolute;
+  width: 350px;
+  height: 650px;
+  bottom: 10%;
+  left: 8%;
+  transform: rotate(5deg);
+  filter: blur(3px);
+  z-index: -1;
+}
+
+.greek4 {
+  position: absolute;
+  width: 350px;
+  height: 350px;
+  top: 32%;
+  left: 20%;
+  transform: rotate(160deg);
+  filter: blur(3px);
+  z-index: -1;
+}

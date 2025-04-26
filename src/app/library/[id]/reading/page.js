@@ -1,5 +1,6 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
+import { useParams } from "next/navigation";
 import { Document, Page, pdfjs } from "react-pdf";
 import "react-pdf/dist/Page/AnnotationLayer.css";
 import "react-pdf/dist/Page/TextLayer.css";
@@ -7,17 +8,41 @@ import "react-pdf/dist/Page/TextLayer.css";
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
 export default function Reading() {
+  const [title, setTitle] = useState("Title");
+  const [author, setAuthor] = useState("Author");
+  const [pdf, setPdf] = useState(null);
   const [isEditable, setIsEditable] = useState(false);
-  const [title, setTitle] = useState(
-    "Research suggests that timed tests cause math anxiety"
-  );
-  const [author, setAuthor] = useState("Jo Boaler");
   const [zenMode, setZenMode] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
   const [annotations, setAnnotations] = useState([]);
   const [numPages, setNumPages] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const annotationInputRef = useRef(null);
+  const { id } = useParams();
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    async function getBook() {
+      const res = await fetch(`/api/getBook?id=${id}`);
+      const data = await res.json();
+      setData(data);
+
+      if (data.title) setTitle(data.title);
+      if (data.author) setAuthor(data.author);
+      if (data.pdf_file) {
+        setPdf(
+          data.pdf_file.startsWith("data:application/pdf;base64,")
+            ? data.pdf_file
+            : `data:application/pdf;base64,${data.pdf_file}`
+        );
+      }
+    }
+
+    if (id) {
+      getBook();
+    }
+  }, [id]);
+  console.log(data);
 
   useEffect(() => {
     const storedDarkMode = localStorage.getItem("darkMode");
@@ -200,17 +225,18 @@ export default function Reading() {
         </div>
 
         <div style={{ width: "1000px", height: "1100px", overflowY: "auto" }}>
-          <Document
-            file="./assets/videos/test.pdf"
-            onLoadSuccess={onDocumentLoadSuccess}
-          >
-            <Page
-              pageNumber={currentPage}
-              width={1000}
-              renderTextLayer={true}
-              renderAnnotationLayer={true}
-            />
-          </Document>
+          {pdf ? (
+            <Document file={pdf} onLoadSuccess={onDocumentLoadSuccess}>
+              <Page
+                pageNumber={currentPage}
+                width={1000}
+                renderTextLayer={true}
+                renderAnnotationLayer={true}
+              />
+            </Document>
+          ) : (
+            <p>Loading PDF...</p>
+          )}
         </div>
       </section>
 

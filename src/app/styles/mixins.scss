@@ -60,20 +60,18 @@
 }
 
 @mixin buttons {
-  button {
-    text-align: center;
-    display: inline-block;
-    padding: 15px 40px;
-    border: 1px solid variables.$base-white;
-    cursor: pointer;
-    letter-spacing: 2px;
-    position: relative;
-    overflow: hidden;
-    @include glassmorphism;
-    @include paragraphs;
-  }
+  text-align: center;
+  display: inline-block;
+  padding: 15px 40px;
+  border: 1px solid variables.$base-white;
+  cursor: pointer;
+  letter-spacing: 2px;
+  position: relative;
+  overflow: hidden;
+  @include glassmorphism;
+  @include paragraphs;
 
-  button::before {
+  &::before {
     content: "";
     position: absolute;
     height: 150px;
@@ -86,7 +84,19 @@
     opacity: 0.3;
   }
 
-  button:hover:before {
+  &:hover::before {
     left: 105%;
+  }
+}
+
+@mixin input-selection {
+  @include glassmorphism;
+  @include paragraphs;
+  height: 3rem;
+  text-align: center;
+
+  option {
+    color: black;
+    background-color: variables.$shade-white;
   }
 }

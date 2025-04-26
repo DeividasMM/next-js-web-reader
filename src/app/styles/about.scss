@@ -1,13 +1,8 @@
 @use "variables" as variables;
 @use "mixins" as mixins;
 
-.container {
-  height: 150vh;
-}
-
 .header-container {
   img {
-    z-index: 1;
     width: 100%;
     height: 100vh;
     object-fit: cover;
@@ -20,19 +15,20 @@
     border: 2px solid variables.$base-white;
     position: absolute;
     left: 50%;
-    top: 12%;
+    top: 20rem;
     transform: translate(-50%);
     white-space: nowrap;
   }
 }
 
 .about-container {
-  position: absolute;
+  position: relative;
   left: 50%;
   transform: translate(-50%);
   padding: 10rem 0rem;
   width: 75%;
   z-index: 6;
+  height: 150vh;
 
   img {
     height: 50vh;
@@ -101,7 +97,7 @@
 .scroll-icon {
   position: absolute;
   left: 50%;
-  top: 32%;
+  top: 45rem;
   width: 3rem;
   height: 3rem;
   transform: translate(-50%);
