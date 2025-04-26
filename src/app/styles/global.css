@@ -585,6 +585,7 @@
   top: 10rem;
   gap: 2.5rem;
   margin-bottom: 15rem;
+  min-height: 45rem;
 }
 
 .greek2 {
@@ -700,6 +701,400 @@
   color: white;
   border-radius: 30px;
   transition: ease-in-out 0.5s;
+}
+
+#reading-main-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  width: 80%;
+  position: relative;
+  left: 65%;
+  margin: 5rem 0rem;
+  transform: translate(-65%);
+}
+
+#main-section {
+  border-right: 2px solid white;
+  border-radius: 8px;
+}
+
+.reading-header-container {
+  display: flex;
+  flex-direction: row;
+  margin: 1rem 0rem;
+  justify-content: space-between;
+}
+
+.header-text-container {
+  margin-left: 1rem;
+}
+.header-text-container h1 {
+  font-family: "Anta", serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 30px;
+  letter-spacing: 2px;
+  color: white;
+}
+.header-text-container h4 {
+  font-family: "Anta", serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 20px;
+  letter-spacing: 2px;
+  color: white;
+  padding: 7px 0px;
+}
+.header-text-container p {
+  font-family: "Anta", serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 15px;
+  letter-spacing: 1px;
+  color: white;
+}
+.header-text-container select {
+  /* From https://css.glass */
+  background: rgba(255, 255, 255, 0.27);
+  border-radius: 8px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(3.5px);
+  -webkit-backdrop-filter: blur(3.5px);
+  border: 2px solid white;
+  font-family: "Anta", serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 15px;
+  letter-spacing: 1px;
+  color: white;
+  width: 10rem;
+  height: 2rem;
+  text-align: center;
+}
+.header-text-container select option {
+  color: black;
+  background-color: rgb(242, 240, 239);
+}
+
+.reading-button-container {
+  display: flex;
+  flex-direction: row;
+  align-items: end;
+  gap: 1rem;
+  margin-right: 1rem;
+}
+.reading-button-container button {
+  text-align: center;
+  display: inline-block;
+  padding: 15px 40px;
+  border: 1px solid white;
+  cursor: pointer;
+  letter-spacing: 2px;
+  position: relative;
+  overflow: hidden;
+  /* From https://css.glass */
+  background: rgba(255, 255, 255, 0.27);
+  border-radius: 8px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(3.5px);
+  -webkit-backdrop-filter: blur(3.5px);
+  border: 2px solid white;
+  font-family: "Anta", serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 15px;
+  letter-spacing: 1px;
+  color: white;
+  height: 3rem;
+  padding: 0px 5px !important;
+}
+.reading-button-container button::before {
+  content: "";
+  position: absolute;
+  height: 150px;
+  width: 50px;
+  background-color: white;
+  left: -40px;
+  bottom: -40px;
+  transform: rotate(37deg);
+  transition: all 0.3s;
+  opacity: 0.3;
+}
+.reading-button-container button:hover::before {
+  left: 105%;
+}
+
+.document {
+  height: 81rem;
+  overflow-y: scroll;
+  border-radius: 15px;
+}
+
+.page-scroll-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem 0rem;
+  gap: 0.8rem;
+}
+.page-scroll-buttons span {
+  font-family: "Anta", serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 15px;
+  letter-spacing: 1px;
+  color: white;
+}
+.page-scroll-buttons button {
+  text-align: center;
+  display: inline-block;
+  padding: 15px 40px;
+  border: 1px solid white;
+  cursor: pointer;
+  letter-spacing: 2px;
+  position: relative;
+  overflow: hidden;
+  /* From https://css.glass */
+  background: rgba(255, 255, 255, 0.27);
+  border-radius: 8px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(3.5px);
+  -webkit-backdrop-filter: blur(3.5px);
+  border: 2px solid white;
+  font-family: "Anta", serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 15px;
+  letter-spacing: 1px;
+  color: white;
+  padding: 7px 7px !important;
+}
+.page-scroll-buttons button::before {
+  content: "";
+  position: absolute;
+  height: 150px;
+  width: 50px;
+  background-color: white;
+  left: -40px;
+  bottom: -40px;
+  transform: rotate(37deg);
+  transition: all 0.3s;
+  opacity: 0.3;
+}
+.page-scroll-buttons button:hover::before {
+  left: 105%;
+}
+
+.annotations-container {
+  display: flex;
+  flex-direction: column;
+  height: 91.5rem;
+  width: 14rem;
+  padding: 0 10px;
+  text-align: center;
+  overflow-y: scroll;
+}
+.annotations-container h2 {
+  font-family: "Anta", serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 30px;
+  letter-spacing: 2px;
+  color: white;
+  margin-bottom: 5rem;
+}
+.annotations-container ul {
+  overflow-y: auto;
+  flex-grow: 1;
+  border-radius: 8px;
+  box-shadow: inset 0 5px 40px -15px rgba(0, 0, 0, 0.5), inset 0 -5px 40px -15px rgba(0, 0, 0, 0.5);
+}
+.annotations-container li {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  /* From https://css.glass */
+  background: rgba(255, 255, 255, 0.27);
+  border-radius: 8px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(3.5px);
+  -webkit-backdrop-filter: blur(3.5px);
+  border: 2px solid white;
+  font-family: "Anta", serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 15px;
+  letter-spacing: 1px;
+  color: white;
+  color: #191919;
+}
+.annotations-container .annotation-text {
+  width: 80%;
+  min-height: 5rem;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  white-space: pre-wrap;
+  flex: 1;
+}
+.annotations-container input {
+  /* From https://css.glass */
+  background: rgba(255, 255, 255, 0.27);
+  border-radius: 8px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(3.5px);
+  -webkit-backdrop-filter: blur(3.5px);
+  border: 2px solid white;
+  font-family: "Anta", serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 15px;
+  letter-spacing: 1px;
+  color: white;
+  margin-top: 1rem;
+  padding: 0.5rem;
+  width: 100%;
+  color: #191919 !important;
+}
+.annotations-container .reading-icon-buttons {
+  position: absolute;
+  right: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.annotations-container .reading-icon-buttons .reading-icon {
+  transform: scale(1.5);
+}
+.annotations-container .reading-icon-buttons .reading-icon:hover {
+  transform: scale(1.7);
+  transition: ease-in-out 50ms;
+}
+.annotations-container .reading-icon-buttons button {
+  background: none;
+  border-radius: 8px;
+  width: 2rem;
+  height: 2rem;
+  cursor: pointer;
+  border: none;
+}
+.annotations-container .textarea textarea {
+  padding: 0.5rem;
+  width: 100%;
+  height: 6rem;
+  margin-top: 0.7rem;
+  resize: none;
+  border-radius: 8px;
+  font-family: "Anta", serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 15px;
+  letter-spacing: 1px;
+  color: white;
+  color: #191919;
+}
+.annotations-container .textarea button {
+  position: absolute;
+  bottom: 1.4rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.annotations-container .textarea button:hover {
+  color: #797877;
+  transform: scale(1.1);
+  transition: ease-in-out 100ms;
+}
+.annotations-container .textarea .textarea-icon {
+  height: 2rem;
+  width: 2rem;
+}
+
+.light {
+  /* From https://css.glass */
+  background: rgba(255, 255, 255, 0.27);
+  border-radius: 8px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(3.5px);
+  -webkit-backdrop-filter: blur(3.5px);
+  border: 2px solid white;
+  transition: ease-in-out 0.3s;
+}
+.light button {
+  transition: ease-in-out 0.3s;
+}
+.light li {
+  transition: ease-in-out 0.3s;
+}
+.light input {
+  transition: ease-in-out 0.3s;
+}
+.light .reading-icon {
+  transition: ease-in-out 0.3s;
+}
+.light .annotations-container ul li.annotation-item {
+  background-color: var(--light-bg) !important;
+}
+
+.dark {
+  /* From https://css.glass */
+  background: rgba(255, 255, 255, 0.27);
+  border-radius: 8px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(3.5px);
+  -webkit-backdrop-filter: blur(3.5px);
+  border: 2px solid white;
+  background-color: rgba(25, 25, 25, 0.5921568627) !important;
+  color: white;
+  transition: ease-in-out 0.3s;
+}
+.dark button {
+  background-color: rgba(25, 25, 25, 0.5921568627) !important;
+  transition: ease-in-out 0.3s;
+}
+.dark li {
+  transition: ease-in-out 0.3s;
+  color: white;
+}
+.dark input {
+  color: white !important;
+  background-color: rgba(25, 25, 25, 0.5921568627) !important;
+  transition: ease-in-out 0.3s;
+}
+.dark .reading-icon-buttons .reading-icon {
+  color: white;
+  transition: ease-in-out 0.3s;
+}
+.dark .reading-icon-buttons button {
+  background: none !important;
+}
+.dark .textarea-button {
+  background-color: transparent !important;
+}
+.dark .annotations-container ul .annotation-item {
+  background-color: var(--dark-bg) !important;
+}
+
+.annotation-item {
+  /* From https://css.glass */
+  background: rgba(255, 255, 255, 0.27);
+  border-radius: 8px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(3.5px);
+  -webkit-backdrop-filter: blur(3.5px);
+  border: 2px solid white;
+  font-family: "Anta", serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 15px;
+  letter-spacing: 1px;
+  color: white;
+  background-color: var(--light-bg);
+  transition: background-color 0.3s;
 }
 
 body {

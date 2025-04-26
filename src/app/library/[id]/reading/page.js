@@ -1,5 +1,11 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faTrash,
+  faPenToSquare,
+  faSquareCaretRight,
+} from "@fortawesome/free-solid-svg-icons";
 import { useParams } from "next/navigation";
 import { Document, Page, pdfjs } from "react-pdf";
 import "react-pdf/dist/Page/AnnotationLayer.css";
@@ -10,16 +16,24 @@ pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/b
 export default function Reading() {
   const [title, setTitle] = useState("Title");
   const [author, setAuthor] = useState("Author");
+  const [category, setCategory] = useState("");
   const [pdf, setPdf] = useState(null);
   const [isEditable, setIsEditable] = useState(false);
   const [zenMode, setZenMode] = useState(false);
-  const [darkMode, setDarkMode] = useState(false);
   const [annotations, setAnnotations] = useState([]);
   const [numPages, setNumPages] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const annotationInputRef = useRef(null);
   const { id } = useParams();
   const [data, setData] = useState(null);
+
+  const generateRandomColors = () => {
+    const hue = Math.floor(Math.random() * 360);
+    return {
+      lightBg: `hsl(${hue}, 70%, 90%)`,
+      darkBg: `hsl(${hue}, 60%, 30%)`,
+    };
+  };
 
   useEffect(() => {
     async function getBook() {
@@ -29,6 +43,7 @@ export default function Reading() {
 
       if (data.title) setTitle(data.title);
       if (data.author) setAuthor(data.author);
+      if (data.category) setCategory(data.category);
       if (data.pdf_file) {
         setPdf(
           data.pdf_file.startsWith("data:application/pdf;base64,")
@@ -44,27 +59,15 @@ export default function Reading() {
   }, [id]);
   console.log(data);
 
-  useEffect(() => {
-    const storedDarkMode = localStorage.getItem("darkMode");
-    if (storedDarkMode !== null) {
-      setDarkMode(JSON.parse(storedDarkMode));
-    }
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem("darkMode", JSON.stringify(darkMode));
-  }, [darkMode]);
-
   const toggleEdit = () => setIsEditable((prev) => !prev);
   const handleTitleChange = (e) => setTitle(e.target.innerText);
   const handleAuthorChange = (e) => setAuthor(e.target.innerText);
+  const handleCategoryChange = (e) => setCategory(e.target.value);
 
   const toggleZenMode = () => {
     setZenMode((prev) => !prev);
     setIsEditable(false);
   };
-
-  const toggleDarkMode = () => setDarkMode((prev) => !prev);
 
   const saveChanges = () => {
     alert("Changes saved successfully!");
@@ -75,14 +78,14 @@ export default function Reading() {
       event.type === "click" ||
       (event.type === "keydown" && event.key === "Enter")
     ) {
-      const text = annotationInputRef.current.value;
-      if (text.trim()) {
-        setAnnotations([
-          ...annotations,
-          { text, isEditable: true, isEditing: false },
-        ]);
-        annotationInputRef.current.value = "";
-      }
+      const text = annotationInputRef.current.value.trim();
+      if (!text) return;
+      const { lightBg, darkBg } = generateRandomColors();
+      setAnnotations([
+        ...annotations,
+        { text, isEditable: true, isEditing: false, lightBg, darkBg },
+      ]);
+      annotationInputRef.current.value = "";
     }
   };
 
@@ -113,14 +116,20 @@ export default function Reading() {
   };
 
   const extractSelectedText = () => {
-    const selection = window.getSelection();
-    const selectedText = selection.toString().trim();
-    if (selectedText) {
+    const selection = window.getSelection().toString().trim();
+    if (selection) {
+      const { lightBg, darkBg } = generateRandomColors();
       setAnnotations([
         ...annotations,
-        { text: selectedText, isEditable: false, isEditing: false },
+        {
+          text: selection,
+          isEditable: false,
+          isEditing: false,
+          lightBg,
+          darkBg,
+        },
       ]);
-      selection.removeAllRanges();
+      window.getSelection().removeAllRanges();
     }
   };
 
@@ -132,99 +141,98 @@ export default function Reading() {
     setCurrentPage((prev) => Math.min(prev + 1, numPages || prev));
   };
 
+  const [theme, setTheme] = useState("light");
+
   return (
-    <main
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "flex-start",
-        flexDirection: "row",
-        background: darkMode ? "#121212" : "white",
-        color: darkMode ? "white" : "black",
-      }}
-    >
-      <section
-        style={{
-          border: "1px solid red",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          flexDirection: "column",
-        }}
-      >
-        <header
-          style={{
-            border: "1px solid red",
-            width: "1000px",
-            margin: "30px 0",
-            display: "flex",
-            justifyContent: "space-between",
-            gap: "20px",
-          }}
-        >
+    <main className={theme} id="reading-main-container">
+      <section id="main-section">
+        <header className="reading-header-container">
           <div>
-            <h1
-              contentEditable={isEditable}
-              suppressContentEditableWarning={true}
-              onInput={handleTitleChange}
-              style={{ margin: "0" }}
-            >
-              {title}
-            </h1>
-            <h4
-              contentEditable={isEditable}
-              suppressContentEditableWarning={true}
-              onInput={handleAuthorChange}
-              style={{ margin: "0" }}
-            >
-              {author}
-            </h4>
+            <div className="header-text-container">
+              <h1
+                contentEditable={isEditable}
+                suppressContentEditableWarning={true}
+                onInput={handleTitleChange}
+              >
+                {title}
+              </h1>
+              <h4
+                contentEditable={isEditable}
+                suppressContentEditableWarning={true}
+                onInput={handleAuthorChange}
+              >
+                {author}
+              </h4>
+              {isEditable ? (
+                <select value={category} onChange={handleCategoryChange}>
+                  <option value="">Select Category</option>
+                  <option value="adventure">Adventure</option>
+                  <option value="biography">Biography</option>
+                  <option value="business-finance">Business & Finance</option>
+                  <option value="fantasy">Fantasy</option>
+                  <option value="health-wellness">Health & Wellness</option>
+                  <option value="historical-fiction">Historical Fiction</option>
+                  <option value="history">History</option>
+                  <option value="horror">Horror</option>
+                  <option value="information-technology">
+                    Information Technology
+                  </option>
+                  <option value="manga">Manga</option>
+                  <option value="mystery">Mystery</option>
+                  <option value="paper">Paper</option>
+                  <option value="philosophy">Philosophy</option>
+                  <option value="report">Report</option>
+                  <option value="research">Research</option>
+                  <option value="romance">Romance</option>
+                  <option value="science-technology">
+                    Science & Technology
+                  </option>
+                  <option value="science-fiction">Science Fiction</option>
+                  <option value="scientific-work">Scientific Work</option>
+                  <option value="summary">Summary</option>
+                  <option value="thriller">Thriller</option>
+                  <option value="other">Other</option>
+                </select>
+              ) : (
+                <p>
+                  {category === "science-technology"
+                    ? "Science & Technology"
+                    : category === "health-wellness"
+                    ? "Health & Wellness"
+                    : category === "business-finance"
+                    ? "Business & Finance"
+                    : category
+                    ? category
+                        .split("-")
+                        .map(
+                          (word) => word.charAt(0).toUpperCase() + word.slice(1)
+                        )
+                        .join(" ")
+                    : "No category selected"}
+                </p>
+              )}
+            </div>
           </div>
-          {zenMode ? (
-            <button onClick={toggleZenMode}>Exit Zen</button>
-          ) : (
-            <>
-              <button onClick={toggleEdit}>🔓</button>
-              <button onClick={saveChanges}>📤</button>
-              <button onClick={toggleZenMode}>Zen Mode</button>
-              <button onClick={toggleDarkMode}>
-                {darkMode ? "Light Mode" : "Dark Mode"}
-              </button>
-              <button onClick={extractSelectedText}>Extract Selection</button>
-            </>
-          )}
+          <div className="reading-button-container">
+            {zenMode ? (
+              <button onClick={toggleZenMode}>Exit Zen</button>
+            ) : (
+              <>
+                <button onClick={toggleEdit}>Edit</button>
+                <button onClick={saveChanges}>Save Changes</button>
+                <button onClick={toggleZenMode}>Zen Mode</button>
+                <button
+                  onClick={() => setTheme(theme == "light" ? "dark" : "light")}
+                >
+                  {theme === "light" ? "Dark Mode" : "Light Mode"}
+                </button>
+                <button onClick={extractSelectedText}>Extract Selection</button>
+              </>
+            )}
+          </div>
         </header>
 
-        <div
-          style={{
-            width: "1000px",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            gap: "20px",
-            marginBottom: "10px",
-          }}
-        >
-          <button
-            onClick={goToPrevPage}
-            disabled={currentPage === 1}
-            style={{ padding: "5px 10px" }}
-          >
-            Previous
-          </button>
-          <span>
-            Page {currentPage} of {numPages || "?"}
-          </span>
-          <button
-            onClick={goToNextPage}
-            disabled={currentPage === numPages}
-            style={{ padding: "5px 10px" }}
-          >
-            Next
-          </button>
-        </div>
-
-        <div style={{ width: "1000px", height: "1100px", overflowY: "auto" }}>
+        <div className="document">
           {pdf ? (
             <Document file={pdf} onLoadSuccess={onDocumentLoadSuccess}>
               <Page
@@ -238,151 +246,71 @@ export default function Reading() {
             <p>Loading PDF...</p>
           )}
         </div>
+
+        <div className="page-scroll-buttons">
+          <button onClick={goToPrevPage} disabled={currentPage === 1}>
+            Previous
+          </button>
+          <span>
+            Page {currentPage} of {numPages || "?"}
+          </span>
+          <button onClick={goToNextPage} disabled={currentPage === numPages}>
+            Next
+          </button>
+        </div>
       </section>
 
       {!zenMode && (
-        <section
-          style={{
-            border: "1px solid red",
-            height: "1159px",
-            margin: "0 10px",
-            overflowY: "scroll",
-            padding: "10px",
-            width: "300px",
-            marginTop: "50px",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "flex-end",
-            background: darkMode ? "#1e1e1e" : "white",
-          }}
-        >
-          <h2 style={{ marginBottom: "15px" }}>Annotations</h2>
-          <ul
-            style={{
-              paddingLeft: "0",
-              listStyleType: "none",
-              overflowY: "auto",
-              flexGrow: 1,
-            }}
-          >
+        <section className="annotations-container">
+          <h2>Annotations</h2>
+          <ul>
             {annotations.map((annotation, index) => (
               <li
                 key={index}
+                className="annotation-item"
                 style={{
-                  marginBottom: "15px",
-                  padding: "10px",
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "10px",
-                  border: "1px solid #ccc",
-                  position: "relative",
-                  maxWidth: "250px",
-                  backgroundColor: annotation.isEditable
-                    ? darkMode
-                      ? "#8b6f47"
-                      : "#d2b48c"
-                    : darkMode
-                    ? "#b3b300"
-                    : "#ffff99",
+                  "--light-bg": annotation.lightBg,
+                  "--dark-bg": annotation.darkBg,
                 }}
               >
-                <div
-                  style={{
-                    wordBreak: "break-word",
-                    overflowWrap: "break-word",
-                    whiteSpace: "pre-wrap",
-                    flex: 1,
-                    paddingRight: "40px",
-                  }}
-                >
+                <div className="annotation-text">
                   {annotation.isEditing && annotation.isEditable ? (
                     <input
                       type="text"
                       value={annotation.text}
                       onChange={(e) => updateAnnotation(index, e.target.value)}
-                      style={{
-                        padding: "5px",
-                        width: "100%",
-                        boxSizing: "border-box",
-                        background: darkMode ? "#333" : "white",
-                        color: darkMode ? "white" : "black",
-                        border: "1px solid #ccc",
-                      }}
                     />
                   ) : (
                     annotation.text
                   )}
                 </div>
-                <div
-                  style={{
-                    position: "absolute",
-                    top: "5px",
-                    right: "5px",
-                    display: "flex",
-                    gap: "5px",
-                  }}
-                >
+                <div className="reading-icon-buttons">
                   {annotation.isEditable && (
-                    <button
-                      onClick={() => toggleEditAnnotation(index)}
-                      style={{
-                        background: darkMode ? "#444" : "white",
-                        color: darkMode ? "white" : "black",
-                        border: "1px solid #ccc",
-                        padding: "2px 5px",
-                        cursor: "pointer",
-                      }}
-                    >
-                      ✏️
+                    <button onClick={() => toggleEditAnnotation(index)}>
+                      <FontAwesomeIcon
+                        icon={faPenToSquare}
+                        className="reading-icon"
+                      />
                     </button>
                   )}
-                  <button
-                    onClick={() => deleteAnnotation(index)}
-                    style={{
-                      background: darkMode ? "#444" : "white",
-                      color: darkMode ? "white" : "black",
-                      border: "1px solid #ccc",
-                      padding: "2px 5px",
-                      cursor: "pointer",
-                    }}
-                  >
-                    🗑️
+                  <button onClick={() => deleteAnnotation(index)}>
+                    <FontAwesomeIcon icon={faTrash} className="reading-icon" />
                   </button>
                 </div>
               </li>
             ))}
           </ul>
-          <div style={{ position: "relative" }}>
+          <div className="textarea">
             <textarea
               ref={annotationInputRef}
-              style={{
-                border: "1px solid #ccc",
-                padding: "10px",
-                width: "100%",
-                height: "80px",
-                marginBottom: "15px",
-                marginTop: "10px",
-                resize: "none",
-                background: darkMode ? "#333" : "white",
-                color: darkMode ? "white" : "black",
-              }}
               placeholder="Write annotation"
               onKeyDown={addAnnotation}
             />
-            <button
-              onClick={addAnnotation}
-              style={{
-                position: "absolute",
-                bottom: "20px",
-                right: "0px",
-                background: "none",
-                border: "none",
-                cursor: "pointer",
-                fontSize: "20px",
-                color: darkMode ? "white" : "black",
-              }}
-            >
-              ➡️
+            <button onClick={addAnnotation} className="textarea-button">
+              <FontAwesomeIcon
+                icon={faSquareCaretRight}
+                className="textarea-icon"
+              />
             </button>
           </div>
         </section>
