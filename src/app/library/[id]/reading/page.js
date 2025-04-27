@@ -27,14 +27,6 @@ export default function Reading() {
   const { id } = useParams();
   const [data, setData] = useState(null);
 
-  const generateRandomColors = () => {
-    const hue = Math.floor(Math.random() * 360);
-    return {
-      lightBg: `hsl(${hue}, 70%, 90%)`,
-      darkBg: `hsl(${hue}, 60%, 30%)`,
-    };
-  };
-
   useEffect(() => {
     async function getBook() {
       const res = await fetch(`/api/getBook?id=${id}`);
@@ -80,10 +72,17 @@ export default function Reading() {
     ) {
       const text = annotationInputRef.current.value.trim();
       if (!text) return;
-      const { lightBg, darkBg } = generateRandomColors();
-      setAnnotations([
-        ...annotations,
-        { text, isEditable: true, isEditing: false, lightBg, darkBg },
+      const lightBg = "#e0e0e0";
+      const darkBg = "#555555";
+      setAnnotations((prev) => [
+        ...prev,
+        {
+          text,
+          isEditable: true,
+          isEditing: false,
+          lightBg,
+          darkBg,
+        },
       ]);
       annotationInputRef.current.value = "";
     }
@@ -117,20 +116,20 @@ export default function Reading() {
 
   const extractSelectedText = () => {
     const selection = window.getSelection().toString().trim();
-    if (selection) {
-      const { lightBg, darkBg } = generateRandomColors();
-      setAnnotations([
-        ...annotations,
-        {
-          text: selection,
-          isEditable: false,
-          isEditing: false,
-          lightBg,
-          darkBg,
-        },
-      ]);
-      window.getSelection().removeAllRanges();
-    }
+    if (!selection) return;
+    const lightYellow = "#fff9a0";
+    const darkYellow = "#BA8E23";
+    setAnnotations((prev) => [
+      ...prev,
+      {
+        text: selection,
+        isEditable: false,
+        isEditing: false,
+        lightBg: lightYellow,
+        darkBg: darkYellow,
+      },
+    ]);
+    window.getSelection().removeAllRanges();
   };
 
   const goToPrevPage = () => {
@@ -148,70 +147,75 @@ export default function Reading() {
       <section id="main-section">
         <header className="reading-header-container">
           <div>
-            <div className="header-text-container">
-              <h1
-                contentEditable={isEditable}
-                suppressContentEditableWarning={true}
-                onInput={handleTitleChange}
-              >
-                {title}
-              </h1>
-              <h4
-                contentEditable={isEditable}
-                suppressContentEditableWarning={true}
-                onInput={handleAuthorChange}
-              >
-                {author}
-              </h4>
-              {isEditable ? (
-                <select value={category} onChange={handleCategoryChange}>
-                  <option value="">Select Category</option>
-                  <option value="adventure">Adventure</option>
-                  <option value="biography">Biography</option>
-                  <option value="business-finance">Business & Finance</option>
-                  <option value="fantasy">Fantasy</option>
-                  <option value="health-wellness">Health & Wellness</option>
-                  <option value="historical-fiction">Historical Fiction</option>
-                  <option value="history">History</option>
-                  <option value="horror">Horror</option>
-                  <option value="information-technology">
-                    Information Technology
-                  </option>
-                  <option value="manga">Manga</option>
-                  <option value="mystery">Mystery</option>
-                  <option value="paper">Paper</option>
-                  <option value="philosophy">Philosophy</option>
-                  <option value="report">Report</option>
-                  <option value="research">Research</option>
-                  <option value="romance">Romance</option>
-                  <option value="science-technology">
-                    Science & Technology
-                  </option>
-                  <option value="science-fiction">Science Fiction</option>
-                  <option value="scientific-work">Scientific Work</option>
-                  <option value="summary">Summary</option>
-                  <option value="thriller">Thriller</option>
-                  <option value="other">Other</option>
-                </select>
-              ) : (
-                <p>
-                  {category === "science-technology"
-                    ? "Science & Technology"
-                    : category === "health-wellness"
-                    ? "Health & Wellness"
-                    : category === "business-finance"
-                    ? "Business & Finance"
-                    : category
-                    ? category
-                        .split("-")
-                        .map(
-                          (word) => word.charAt(0).toUpperCase() + word.slice(1)
-                        )
-                        .join(" ")
-                    : "No category selected"}
-                </p>
-              )}
-            </div>
+            {!zenMode && (
+              <div className="header-text-container">
+                <h1
+                  contentEditable={isEditable}
+                  suppressContentEditableWarning={true}
+                  onInput={handleTitleChange}
+                >
+                  {title}
+                </h1>
+                <h4
+                  contentEditable={isEditable}
+                  suppressContentEditableWarning={true}
+                  onInput={handleAuthorChange}
+                >
+                  {author}
+                </h4>
+                {isEditable ? (
+                  <select value={category} onChange={handleCategoryChange}>
+                    <option value="">Select Category</option>
+                    <option value="adventure">Adventure</option>
+                    <option value="biography">Biography</option>
+                    <option value="business-finance">Business & Finance</option>
+                    <option value="fantasy">Fantasy</option>
+                    <option value="health-wellness">Health & Wellness</option>
+                    <option value="historical-fiction">
+                      Historical Fiction
+                    </option>
+                    <option value="history">History</option>
+                    <option value="horror">Horror</option>
+                    <option value="information-technology">
+                      Information Technology
+                    </option>
+                    <option value="manga">Manga</option>
+                    <option value="mystery">Mystery</option>
+                    <option value="paper">Paper</option>
+                    <option value="philosophy">Philosophy</option>
+                    <option value="report">Report</option>
+                    <option value="research">Research</option>
+                    <option value="romance">Romance</option>
+                    <option value="science-technology">
+                      Science & Technology
+                    </option>
+                    <option value="science-fiction">Science Fiction</option>
+                    <option value="scientific-work">Scientific Work</option>
+                    <option value="summary">Summary</option>
+                    <option value="thriller">Thriller</option>
+                    <option value="other">Other</option>
+                  </select>
+                ) : (
+                  <p>
+                    {category === "science-technology"
+                      ? "Science & Technology"
+                      : category === "health-wellness"
+                      ? "Health & Wellness"
+                      : category === "business-finance"
+                      ? "Business & Finance"
+                      : category
+                      ? category
+                          .split("-")
+                          .map(
+                            (word) =>
+                              word.charAt(0).toUpperCase() + word.slice(1)
+                          )
+                          .join(" ")
+                      : "No category selected"}
+                  </p>
+                )}
+              </div>
+            )}
           </div>
           <div className="reading-button-container">
             {zenMode ? (
