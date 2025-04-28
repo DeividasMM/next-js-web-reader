@@ -25,17 +25,21 @@
 
 .header-text-container {
   margin-left: 1rem;
+  width: 25rem;
   h1 {
     @include mixins.header-first-style;
+    width: 100%;
   }
 
   h4 {
     @include mixins.header-second-style;
     margin: 15px 0px;
+    width: 100%;
   }
 
   p {
     @include mixins.paragraphs;
+    width: 100%;
   }
 
   select {
@@ -62,12 +66,15 @@
 .reading-button-container {
   display: flex;
   flex-direction: row;
-  align-items: end;
+  flex-wrap: wrap;
+  align-items: center;
   gap: 1rem;
+  width: 25rem;
   button {
     @include mixins.buttons;
     height: 3rem;
     padding: 0px 5px !important;
+    flex: calc((100% - 2 * 1rem) / 3);
   }
 }
 
@@ -150,23 +157,24 @@
     right: 0.5rem;
     display: flex;
     flex-direction: column;
-    gap: 0.4rem;
-    transition: ease-in-out 50ms;
+    gap: 0.7rem;
 
     .reading-icon {
       font-size: 25px;
+      transition: ease-in-out 200ms;
 
       &:hover {
         font-size: 30px;
-        transition: ease-in-out 50ms;
+        transition: ease-in-out 200ms;
+        color: variables.$grey-white;
       }
     }
 
     button {
       background: none;
       border-radius: 8px;
-      width: 2rem;
-      height: 2rem;
+      width: 25px;
+      height: 25px;
       cursor: pointer;
       border: none;
     }

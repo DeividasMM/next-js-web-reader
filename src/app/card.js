@@ -1,26 +1,22 @@
 import Link from "next/link";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
-export default function Card({ id, title, author, onDelete }) {
+export default function Card({ id, title, author, genre, date, onDelete }) {
   return (
     <>
-      <div className="card" style={{ position: "relative" }}>
+      <div className="card">
         <div className="content-box">
           <h3>{title}</h3>
           <p>{author}</p>
+          <p>{genre}</p>
+          <p>{date}</p>
         </div>
         <Link href={`/library/${id}/reading`} className="reading-link">
           Start to read!
         </Link>
-        <button
-          onClick={() => onDelete(id)}
-          style={{
-            position: "absolute",
-            top: "10px",
-            padding: "5px",
-            cursor: "pointer"
-          }}
-        >
-          Delete
+        <button className="delete-button" onClick={() => onDelete(id)}>
+          <FontAwesomeIcon icon={faTrash} />
         </button>
       </div>
     </>

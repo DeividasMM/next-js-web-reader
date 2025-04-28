@@ -225,6 +225,7 @@ export default function Reading() {
                 <button onClick={toggleEdit}>Edit</button>
                 <button onClick={saveChanges}>Save Changes</button>
                 <button onClick={toggleZenMode}>Zen Mode</button>
+                <button>Bookmark</button>
                 <button
                   onClick={() => setTheme(theme == "light" ? "dark" : "light")}
                 >
