@@ -3,10 +3,10 @@
 
 .input-selection-library {
   @include mixins.input-selection;
-    position: absolute;
-    right: 3.5rem;
-    margin-top: 3.5rem;
-    z-index: 6;
+  position: absolute;
+  right: 3.5rem;
+  margin-top: 3.5rem;
+  z-index: 6;
 }
 
 .books-container {
@@ -20,6 +20,7 @@
   top: 10rem;
   gap: 2.5rem;
   margin-bottom: 15rem;
+  min-height: 45rem;
 }
 
 .greek2 {
