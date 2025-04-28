@@ -44,6 +44,5 @@ body::before {
     ),
     linear-gradient(to top, #ffa100ff 0%, #66e6ffff 100%);
   background-blend-mode: multiply;
-  filter: blur(4px);
   z-index: -1;
 }

@@ -635,14 +635,14 @@
   content: "";
   position: absolute;
   top: 0px;
-  width: 35rem;
-  height: 100%;
+  width: 50rem;
+  height: 30rem;
   transform: skewX(60deg);
   background-image: radial-gradient(circle 986.6px at 10% 20%, rgba(251, 6, 6, 0.94) 0%, rgb(3, 31, 213) 82.8%, rgb(248, 101, 248) 87.9%);
-  transition: ease-in-out 0.5s;
+  transition: ease-in-out 0.6s;
 }
 .card:hover::before {
-  top: -200px;
+  top: -275px;
 }
 .card:hover .reading-link {
   top: -50px;
@@ -653,6 +653,11 @@
 }
 .card:hover .content-box p {
   color: #191919;
+}
+.card:hover .delete-button {
+  position: absolute;
+  top: 1rem;
+  transition: ease-in-out 0.5s;
 }
 .card .content-box {
   position: relative;
@@ -672,6 +677,9 @@
   letter-spacing: 2px;
   color: white;
   text-transform: uppercase;
+  max-width: 20ch;
+  overflow: hidden;
+  text-overflow: ellipsis;
   margin-bottom: 10px;
   transition: ease-in-out 0.5s;
 }
@@ -682,7 +690,7 @@
   font-size: 15px;
   letter-spacing: 1px;
   color: white;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   transition: ease-in-out 0.5s;
 }
 .card .reading-link {
@@ -701,6 +709,22 @@
   color: white;
   border-radius: 30px;
   transition: ease-in-out 0.5s;
+}
+
+.delete-button {
+  position: absolute;
+  top: -3rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  color: white;
+  transition: ease-in-out 0.5s;
+}
+.delete-button:hover {
+  font-size: 25px;
+  color: rgb(228, 228, 228);
 }
 
 #reading-main-container {
@@ -729,6 +753,7 @@
 
 .header-text-container {
   margin-left: 1rem;
+  width: 25rem;
 }
 .header-text-container h1 {
   font-family: "Anta", serif;
@@ -737,6 +762,7 @@
   font-size: 30px;
   letter-spacing: 2px;
   color: white;
+  width: 100%;
 }
 .header-text-container h4 {
   font-family: "Anta", serif;
@@ -746,6 +772,7 @@
   letter-spacing: 2px;
   color: white;
   margin: 15px 0px;
+  width: 100%;
 }
 .header-text-container p {
   font-family: "Anta", serif;
@@ -754,6 +781,7 @@
   font-size: 15px;
   letter-spacing: 1px;
   color: white;
+  width: 100%;
 }
 .header-text-container select {
   /* From https://css.glass */
@@ -787,8 +815,10 @@
 .reading-button-container {
   display: flex;
   flex-direction: row;
-  align-items: end;
+  flex-wrap: wrap;
+  align-items: center;
   gap: 1rem;
+  width: 25rem;
 }
 .reading-button-container button {
   text-align: center;
@@ -814,6 +844,7 @@
   color: white;
   height: 3rem;
   padding: 0px 5px !important;
+  flex: calc((100% - 2rem) / 3);
 }
 .reading-button-container button::before {
   content: "";
@@ -969,21 +1000,22 @@
   right: 0.5rem;
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
-  transition: ease-in-out 50ms;
+  gap: 0.7rem;
 }
 .annotations-container .reading-icon-buttons .reading-icon {
   font-size: 25px;
+  transition: ease-in-out 200ms;
 }
 .annotations-container .reading-icon-buttons .reading-icon:hover {
   font-size: 30px;
-  transition: ease-in-out 50ms;
+  transition: ease-in-out 200ms;
+  color: #797877;
 }
 .annotations-container .reading-icon-buttons button {
   background: none;
   border-radius: 8px;
-  width: 2rem;
-  height: 2rem;
+  width: 25px;
+  height: 25px;
   cursor: pointer;
   border: none;
 }
@@ -1125,7 +1157,6 @@ body::before {
   bottom: -20px;
   background: radial-gradient(circle farthest-corner at 50% 100%, rgba(204, 204, 204, 0.9294117647) 0% 18%, rgba(140, 140, 140, 0.9294117647) 18%, rgba(166, 166, 166, 0.9294117647) 22% 36%, rgba(115, 115, 115, 0.9294117647) 36%, rgba(128, 128, 128, 0.9294117647) 40% 54%, rgba(71, 71, 71, 0.9294117647) 54%, rgba(77, 77, 77, 0.9294117647) 58% 72%, rgba(31, 31, 31, 0.9294117647) 72%, rgba(38, 38, 38, 0.9294117647) 76% 90%, rgba(13, 13, 13, 0.9294117647) 90% 90%), radial-gradient(circle farthest-corner at 0% 50%, #ff0040 0%, fuchsia 100%), linear-gradient(to top, #ffa100 0%, #66e6ff 100%);
   background-blend-mode: multiply;
-  filter: blur(4px);
   z-index: -1;
 }
 
