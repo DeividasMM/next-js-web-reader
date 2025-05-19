@@ -23,6 +23,8 @@ export default function Reading() {
   const [annotations, setAnnotations] = useState([]);
   const [numPages, setNumPages] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
+  const [bookmarkPage, setBookmarkPage] = useState(null);
+  const [isBookDataLoaded, setIsBookDataLoaded] = useState(false);
   const annotationInputRef = useRef(null);
   const { id } = useParams();
   const [data, setData] = useState(null);
@@ -37,12 +39,34 @@ export default function Reading() {
       if (data.author) setAuthor(data.author);
       if (data.genre) setCategory(data.genre);
       if (data.pdf_file) {
-        setPdf(
-          data.pdf_file.startsWith("data:application/pdf;base64,")
-            ? data.pdf_file
-            : `data:application/pdf;base64,${data.pdf_file}`
-        );
+        const formattedPdf = data.pdf_file.startsWith(
+          "data:application/pdf;base64,"
+        )
+          ? data.pdf_file
+          : `data:application/pdf;base64,${data.pdf_file}`;
+        setPdf(formattedPdf);
       }
+      if (data.bookmark_page) {
+        const bookmark = parseInt(data.bookmark_page, 10);
+        setBookmarkPage(bookmark);
+        setCurrentPage(bookmark);
+      } else {
+        console.log("No bookmark page found, defaulting to page 1");
+      }
+
+      if (data.notes) {
+        const formattedNotes = data.notes.map((note) => ({
+          note_id: note.note_id,
+          text: note.content,
+          isEditable: !note.isExtraction,
+          isEditing: false,
+          lightBg: note.isExtraction ? "#fff9a0" : "#e0e0e0",
+          darkBg: note.isExtraction ? "#BA8E23" : "#555555",
+        }));
+        setAnnotations(formattedNotes);
+      }
+
+      setIsBookDataLoaded(true);
     }
 
     if (id) {
@@ -86,39 +110,89 @@ export default function Reading() {
     }
   };
 
-  const addAnnotation = (event) => {
+  const addAnnotation = async (event) => {
     if (
       event.type === "click" ||
       (event.type === "keydown" && event.key === "Enter")
     ) {
       const text = annotationInputRef.current.value.trim();
       if (!text) return;
+
       const lightBg = "#e0e0e0";
       const darkBg = "#555555";
-      setAnnotations((prev) => [
-        ...prev,
-        {
-          text,
-          isEditable: true,
-          isEditing: false,
-          lightBg,
-          darkBg,
-        },
-      ]);
+
+      const newAnnotation = {
+        text,
+        isEditable: true,
+        isEditing: false,
+        lightBg,
+        darkBg,
+      };
+
+      setAnnotations((prev) => [...prev, newAnnotation]);
       annotationInputRef.current.value = "";
+
+      await postAnnotationToDB(text, false);
     }
   };
 
-  const deleteAnnotation = (index) => {
-    setAnnotations(annotations.filter((_, i) => i !== index));
+  const deleteAnnotation = async (index) => {
+    const annotation = annotations[index];
+    if (!annotation.note_id) {
+      setAnnotations(annotations.filter((_, i) => i !== index));
+      return;
+    }
+
+    try {
+      const res = await fetch(
+        `/api/deleteComment?note_id=${annotation.note_id}`,
+        {
+          method: "DELETE",
+        }
+      );
+
+      if (!res.ok) {
+        console.error("Failed to delete annotation from DB");
+        return;
+      }
+
+      setAnnotations(annotations.filter((_, i) => i !== index));
+    } catch (error) {
+      console.error("Error deleting annotation:", error);
+    }
   };
 
-  const toggleEditAnnotation = (index) => {
+  const toggleEditAnnotation = async (index) => {
+    const annotation = annotations[index];
+
+    if (!annotation.isEditable) return;
+
+    if (annotation.isEditing) {
+      try {
+        const res = await fetch("/api/updateComment", {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            note_id: annotation.note_id,
+            content: annotation.text,
+          }),
+        });
+
+        if (!res.ok) {
+          console.error("Failed to update annotation");
+          return;
+        }
+      } catch (error) {
+        console.error("Update error:", error);
+        return;
+      }
+    }
+
     setAnnotations(
-      annotations.map((annotation, i) =>
-        i === index && annotation.isEditable
-          ? { ...annotation, isEditing: !annotation.isEditing }
-          : annotation
+      annotations.map((a, i) =>
+        i === index ? { ...a, isEditing: !a.isEditing } : a
       )
     );
   };
@@ -133,24 +207,30 @@ export default function Reading() {
 
   const onDocumentLoadSuccess = ({ numPages }) => {
     setNumPages(numPages);
+    if (bookmarkPage && bookmarkPage <= numPages) {
+      setCurrentPage(bookmarkPage);
+    }
   };
 
-  const extractSelectedText = () => {
+  const extractSelectedText = async () => {
     const selection = window.getSelection().toString().trim();
     if (!selection) return;
+
     const lightYellow = "#fff9a0";
     const darkYellow = "#BA8E23";
-    setAnnotations((prev) => [
-      ...prev,
-      {
-        text: selection,
-        isEditable: false,
-        isEditing: false,
-        lightBg: lightYellow,
-        darkBg: darkYellow,
-      },
-    ]);
+
+    const newExtraction = {
+      text: selection,
+      isEditable: false,
+      isEditing: false,
+      lightBg: lightYellow,
+      darkBg: darkYellow,
+    };
+
+    setAnnotations((prev) => [...prev, newExtraction]);
     window.getSelection().removeAllRanges();
+
+    await postAnnotationToDB(selection, true);
   };
 
   const goToPrevPage = () => {
@@ -162,6 +242,56 @@ export default function Reading() {
   };
 
   const [theme, setTheme] = useState("light");
+
+  const postAnnotationToDB = async (
+    text,
+    isExtraction,
+    pageNumber = currentPage
+  ) => {
+    try {
+      const res = await fetch("/api/postComment", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          pdf_id: id,
+          content: text,
+          isExtraction,
+          bookmark_page: pageNumber,
+        }),
+      });
+
+      if (!res.ok) throw new Error("Failed to post annotation");
+    } catch (error) {
+      console.error("Post error:", error);
+    }
+  };
+
+  const handleBookmark = async () => {
+    try {
+      const res = await fetch("/api/bookmark", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          pdf_id: id,
+          page: currentPage,
+        }),
+      });
+
+      if (!res.ok) {
+        console.error("Failed to bookmark page");
+        return;
+      }
+
+      setBookmarkPage(currentPage);
+      console.log(`Bookmarked page ${currentPage}`);
+    } catch (err) {
+      console.error("Bookmark error:", err);
+    }
+  };
 
   return (
     <main className={theme} id="reading-main-container">
@@ -234,9 +364,9 @@ export default function Reading() {
                 <button onClick={toggleEdit}>Edit</button>
                 <button onClick={saveChanges}>Save Changes</button>
                 <button onClick={toggleZenMode}>Zen Mode</button>
-                <button>Bookmark</button>
+                <button onClick={handleBookmark}>Bookmark</button>
                 <button
-                  onClick={() => setTheme(theme == "light" ? "dark" : "light")}
+                  onClick={() => setTheme(theme === "light" ? "dark" : "light")}
                 >
                   {theme === "light" ? "Dark Mode" : "Light Mode"}
                 </button>
@@ -247,13 +377,18 @@ export default function Reading() {
         </header>
 
         <div className="document">
-          {pdf ? (
-            <Document file={pdf} onLoadSuccess={onDocumentLoadSuccess}>
+          {pdf && isBookDataLoaded && currentPage ? (
+            <Document
+              file={pdf}
+              key={pdf}
+              onLoadSuccess={onDocumentLoadSuccess}
+            >
               <Page
+                key={`page-${currentPage}`}
                 pageNumber={currentPage}
                 width={1000}
                 renderTextLayer={true}
-                renderAnnotationLayer={true}
+                renderAnnotationLayer={false}
               />
             </Document>
           ) : (
