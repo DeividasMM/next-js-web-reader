@@ -35,7 +35,7 @@ export default function Reading() {
 
       if (data.title) setTitle(data.title);
       if (data.author) setAuthor(data.author);
-      if (data.category) setCategory(data.category);
+      if (data.genre) setCategory(data.genre);
       if (data.pdf_file) {
         setPdf(
           data.pdf_file.startsWith("data:application/pdf;base64,")
@@ -49,7 +49,6 @@ export default function Reading() {
       getBook();
     }
   }, [id]);
-  console.log(data);
 
   const toggleEdit = () => setIsEditable((prev) => !prev);
   const handleTitleChange = (e) => setTitle(e.target.innerText);
@@ -61,8 +60,30 @@ export default function Reading() {
     setIsEditable(false);
   };
 
-  const saveChanges = () => {
-    alert("Changes saved successfully!");
+  const saveChanges = async () => {
+    try {
+      const response = await fetch(`/api/updateBook`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id,
+          title,
+          author,
+          genre: category,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to update book");
+      }
+
+      setIsEditable(false);
+      const data = await response.json();
+    } catch (error) {
+      console.error("Error updating book:", error);
+    }
   };
 
   const addAnnotation = (event) => {
@@ -197,21 +218,9 @@ export default function Reading() {
                   </select>
                 ) : (
                   <p>
-                    {category === "science-technology"
-                      ? "Science & Technology"
-                      : category === "health-wellness"
-                      ? "Health & Wellness"
-                      : category === "business-finance"
-                      ? "Business & Finance"
-                      : category
-                      ? category
-                          .split("-")
-                          .map(
-                            (word) =>
-                              word.charAt(0).toUpperCase() + word.slice(1)
-                          )
-                          .join(" ")
-                      : "No category selected"}
+                    {category && category.length > 0
+                      ? category[0].toLocaleUpperCase() + category.slice(1)
+                      : "No category"}
                   </p>
                 )}
               </div>
