@@ -92,11 +92,13 @@ export default function Upload() {
 
       <div className="header-container">
         <h1>Upload Your Files</h1>
-        <FontAwesomeIcon icon={faChevronDown} className="scroll-icon" />
+        <a href="#main-container">
+          <FontAwesomeIcon icon={faChevronDown} className="scroll-icon" />
+        </a>
         <img src="/assets/images/banner8.png" alt="" />
       </div>
 
-      <div className="main-container">
+      <div className="main-container" id="main-container">
         <div {...getRootProps()} className="drop-zone">
           <h1 className="header">Upload your file!</h1>
           <input {...getInputProps()} />

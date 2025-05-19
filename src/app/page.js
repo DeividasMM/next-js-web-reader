@@ -12,10 +12,10 @@ export default async function Home() {
       ></video>
       <div className="container-home">
         <div>
-          <a href="#">
+          {/* <a href="#">
             <FontAwesomeIcon icon={faCirclePlay} className="white-icons" />
             Check our Web Reader's tutorials now!
-          </a>
+          </a> */}
         </div>
       </div>
       <div className="test">&nbsp;</div>

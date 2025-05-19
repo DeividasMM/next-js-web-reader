@@ -11,6 +11,10 @@
 
 @import url("https://fonts.googleapis.com/css2?family=Anta&display=swap");
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   position: relative;
   margin: 0;
