@@ -92,22 +92,26 @@
 }
 
 .greek {
-    position: absolute;
-    width: 300px;
-    height: 600px;
-    right: -50px;
-    top: 45%;
-    transform: rotate(-37deg);
-    filter: blur(3px);
+  position: absolute;
+  width: 300px;
+  height: 600px;
+  right: -50px;
+  top: 45%;
+  transform: rotate(-37deg);
+  filter: blur(3px);
 }
 
 .books {
-    position: absolute;
-    width: 250px;
-    height: 400px;
-    bottom: 12%;
-    left: 8%;
-    transform: rotate(15deg);
-    filter: blur(3px);
-    z-index: -1;
+  position: absolute;
+  width: 250px;
+  height: 400px;
+  bottom: 12%;
+  left: 8%;
+  transform: rotate(15deg);
+  filter: blur(3px);
+  z-index: -1;
+}
+
+#main-container {
+  scroll-margin-top: 7.2rem;
 }

@@ -94,6 +94,10 @@
   }
 }
 
+#about-container {
+  scroll-margin-top: 0.2rem;
+}
+
 .scroll-icon {
   position: absolute;
   left: 50%;
@@ -102,4 +106,30 @@
   height: 3rem;
   transform: translate(-50%);
   color: variables.$base-white;
+  animation: bounce-7 2s infinite;
+
+  @keyframes bounce-7 {
+    0% {
+      transform: scale(1, 1) translateY(0);
+    }
+    10% {
+      transform: scale(1.1, 0.9) translateY(0);
+    }
+    30% {
+      transform: scale(0.9, 1.1) translateY(-15px);
+    }
+    50% {
+      transform: scale(1.05, 0.95) translateY(0);
+      color: variables.$grey-white;
+    }
+    57% {
+      transform: scale(1, 1) translateY(-7px);
+    }
+    64% {
+      transform: scale(1, 1) translateY(0);
+    }
+    100% {
+      transform: scale(1, 1) translateY(0);
+    }
+  }
 }

@@ -8,11 +8,13 @@ function AboutUs() {
       <div className="container">
         <div className="header-container">
           <h1>About Us</h1>
-          <FontAwesomeIcon icon={faChevronDown} className="scroll-icon" />
+          <a href="#about-container">
+            <FontAwesomeIcon icon={faChevronDown} className="scroll-icon" />
+          </a>
           <img src="/assets/images/banner8.png" alt=""></img>
         </div>
 
-        <div className="about-container">
+        <div className="about-container" id="about-container">
           <div className="first-container">
             <div className="first-text-container">
               <h2>Lorem ipsum dolor sit amet</h2>
