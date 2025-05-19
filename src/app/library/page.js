@@ -8,6 +8,26 @@ import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 export default function Library() {
   const [books, setBooks] = useState([]);
 
+  async function onDelete(id) {
+    const confirmed = window.confirm("Are you sure you want to delete it?");
+    if (!confirmed) return;
+
+    try {
+      const response = await fetch(`/api/deleteBook?id=${id}`, {
+        method: "DELETE",
+      });
+      if (response.ok) {
+        setBooks(books.filter((book) => book.pdf_id !== id));
+      } else {
+        alert("Failed to delete PDF");
+        console.error("Failed to delete PDF");
+      }
+    } catch (e) {
+      alert("Error deleting PDF");
+      console.error("Error:", e);
+    }
+  }
+
   useEffect(() => {
     async function getData() {
       try {
@@ -55,6 +75,7 @@ export default function Library() {
               id={item.pdf_id}
               title={item.title}
               author={item.author}
+              onDelete={() => onDelete(item.pdf_id)}
             />
           ))}
         </div>

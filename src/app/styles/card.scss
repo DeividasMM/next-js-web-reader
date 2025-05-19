@@ -15,16 +15,16 @@
     content: "";
     position: absolute;
     top: 0px;
-    width: 35rem;
-    height: 100%;
+    width: 50rem;
+    height: 30rem;
     transform: skewX(60deg);
     background-image: variables.$pink-gradient;
-    transition: ease-in-out 0.5s;
+    transition: ease-in-out 0.6s;
   }
 
   &:hover {
     &::before {
-      top: -200px;
+      top: -275px;
     }
     .reading-link {
       top: -50px;
@@ -37,6 +37,11 @@
         p {
             color: variables.$base-black;
         }
+    }
+    .delete-button {
+      position: absolute;
+      top: 1rem;
+      transition: ease-in-out 0.5s;
     }
   }
 
@@ -51,13 +56,16 @@
     h3 {
       @include mixins.header-second-style;
       text-transform: uppercase;
+      max-width: 20ch;
+      overflow: hidden;
+      text-overflow: ellipsis;
       margin-bottom: 10px;
       transition: ease-in-out 0.5s;
     }
 
     p {
       @include mixins.paragraphs;
-      margin-bottom: 20px;
+      margin-bottom: 10px;
       transition: ease-in-out 0.5s;
     }
   }
@@ -73,5 +81,22 @@
     @include mixins.paragraphs;
     border-radius: 30px;
     transition: ease-in-out 0.5s;
+  }
+}
+
+.delete-button {
+  position: absolute;
+  top: -3rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  color: variables.$base-white;
+  transition: ease-in-out 0.5s;
+
+  &:hover {
+    font-size: 25px;
+    color: variables.$darker-white;
   }
 }
