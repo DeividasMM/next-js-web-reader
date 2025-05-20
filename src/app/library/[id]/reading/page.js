@@ -303,19 +303,47 @@ export default function Reading() {
                 <h1
                   contentEditable={isEditable}
                   suppressContentEditableWarning={true}
-                  onInput={handleTitleChange}
+                  onBlur={handleTitleChange}
+                  style={
+                    isEditable
+                      ? {
+                          border: "2px solid #4a90e2",
+                          background: "rgba(255, 255, 255, 0.1)",
+                          backdropFilter: "blur(5px)",
+                          WebkitBackdropFilter: "blur(5px)",
+                          padding: "5px",
+                          borderRadius: "5px",
+                        }
+                      : {}
+                  }
                 >
                   {title}
                 </h1>
                 <h4
                   contentEditable={isEditable}
                   suppressContentEditableWarning={true}
-                  onInput={handleAuthorChange}
+                  onBlur={handleAuthorChange}
+                  style={
+                    isEditable
+                      ? {
+                          border: "2px solid #4a90e2",
+                          background: "rgba(255, 255, 255, 0.1)",
+                          backdropFilter: "blur(5px)",
+                          WebkitBackdropFilter: "blur(5px)",
+                          padding: "5px",
+                          borderRadius: "5px",
+                        }
+                      : {}
+                  }
                 >
                   {author}
                 </h4>
                 {isEditable ? (
-                  <select value={category} onChange={handleCategoryChange}>
+                  <select
+                    value={category}
+                    onChange={handleCategoryChange}
+                    style={{ paddingLeft: "10px", width: "max-content" }}
+                  >
                     <option value="">Select Category</option>
                     <option value="adventure">Adventure</option>
                     <option value="biography">Biography</option>
@@ -424,11 +452,12 @@ export default function Reading() {
               >
                 <div className="annotation-text">
                   {annotation.isEditing && annotation.isEditable ? (
-                    <input
-                      type="text"
-                      value={annotation.text}
-                      onChange={(e) => updateAnnotation(index, e.target.value)}
-                    />
+                    <textarea
+                    value={annotation.text}
+                    onChange={(e) => updateAnnotation(index, e.target.value)}
+                    rows={Math.max(4, Math.max(annotation.text.split('\n').length, Math.ceil(annotation.text.length / 44)))}
+                    style={{ width: "100%", resize: "vertical" }}
+                  />
                   ) : (
                     annotation.text
                   )}
