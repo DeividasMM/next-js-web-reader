@@ -183,6 +183,7 @@ export default function Reading() {
 
         return;
       }
+
       try {
         const res = await fetch("/api/updateComment", {
           method: "PUT",
@@ -451,12 +452,13 @@ export default function Reading() {
                 <div className="annotation-text">
                   {annotation.isEditing && annotation.isEditable ? (
                     <textarea
+
                       className="editable-textarea"
                       value={annotation.text}
                       onChange={(e) => updateAnnotation(index, e.target.value)}
                       rows={Math.max(
                         4,
-
+                        
                         Math.max(
                           annotation.text.split("\n").length,
 
