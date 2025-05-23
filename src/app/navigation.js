@@ -12,18 +12,6 @@ import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 export default function Navigation() {
   return (
     <>
-      <style>
-        {`
-          @keyframes anime {
-            0% {
-              background-position: -200% 0;
-            }
-            100% {
-              background-position: 200% 0;
-            }
-          }
-        `}
-      </style>
       <div className="navigation-container">
         <SignedOut>
           <SignInButton mode="modal">
@@ -37,19 +25,7 @@ export default function Navigation() {
         </SignedOut>
 
         <SignedIn>
-          <div
-            style={{
-              display: "flex",
-              width: "35px",
-              height: "35px",
-              borderRadius: "50%",
-              filter: "drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.1))",
-              background:
-                "linear-gradient(90deg, #F2F0EF 25%, #FE9B27 50%, #F2F0EF 75%)",
-              backgroundSize: "200% 100%",
-              animation: "anime 1.5s infinite linear",
-            }}
-          >
+          <div className="signed-in-background">
             <UserButton />
           </div>
         </SignedIn>

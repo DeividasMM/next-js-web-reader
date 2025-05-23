@@ -214,6 +214,25 @@
   height: 35px;
 }
 
+.signed-in-background {
+  display: flex;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.1));
+  background: linear-gradient(90deg, #f2f0ef 25%, #fe9b27 50%, #f2f0ef 75%);
+  background-size: 200% 100%;
+  animation: anime 1.5s infinite linear;
+}
+
+@keyframes anime {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
 .main-container {
   position: relative;
   margin-top: 7rem;
@@ -713,11 +732,12 @@
   font-size: 20px;
   letter-spacing: 2px;
   color: white;
-  text-transform: uppercase;
-  max-width: 20ch;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 5;
   overflow: hidden;
-  text-overflow: ellipsis;
-  margin-bottom: 10px;
+  text-transform: uppercase;
+  margin-bottom: 3rem;
   transition: ease-in-out 0.5s;
 }
 .card .content-box p {
@@ -727,8 +747,13 @@
   font-size: 15px;
   letter-spacing: 1px;
   color: white;
-  margin-bottom: 10px;
+  position: absolute;
+  bottom: 5rem;
   transition: ease-in-out 0.5s;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
 }
 .card .reading-link {
   left: 2rem;
@@ -789,7 +814,7 @@
 
 .header-text-container {
   margin-left: 1rem;
-  width: 25rem;
+  width: 35rem;
 }
 .header-text-container h1 {
   font-family: "Anta", serif;
@@ -807,7 +832,7 @@
   font-size: 20px;
   letter-spacing: 2px;
   color: white;
-  margin: 15px 0px;
+  margin: 1rem 0rem 1.5rem 0rem;
   width: 100%;
 }
 .header-text-container p {
@@ -818,6 +843,18 @@
   letter-spacing: 1px;
   color: white;
   width: 100%;
+}
+.header-text-container .editable-text {
+  /* From https://css.glass */
+  background: rgba(255, 255, 255, 0.27);
+  border-radius: 8px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(3.5px);
+  -webkit-backdrop-filter: blur(3.5px);
+  border: 2px solid white;
+  padding: 5px 10px;
+  margin: 0.5rem 0rem;
+  border: 2px solid skyblue;
 }
 .header-text-container select {
   /* From https://css.glass */
@@ -835,8 +872,9 @@
   color: white;
   width: 10rem;
   height: 2rem;
-  text-align: center;
   transition: ease-in-out 100ms;
+  width: max-content;
+  padding: 0rem 2rem;
 }
 .header-text-container select:hover {
   color: rgb(228, 228, 228);
@@ -846,6 +884,27 @@
 .header-text-container select option {
   color: black;
   background-color: rgb(242, 240, 239);
+}
+
+.editable-textarea {
+  width: 100%;
+  resize: vertical;
+  /* From https://css.glass */
+  background: rgba(255, 255, 255, 0.27);
+  border-radius: 8px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(3.5px);
+  -webkit-backdrop-filter: blur(3.5px);
+  border: 2px solid white;
+  border: 2px solid #797877;
+  font-family: "Anta", serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 15px;
+  letter-spacing: 1px;
+  color: white;
+  color: #191919;
+  padding: 5px;
 }
 
 .reading-button-container {
@@ -963,10 +1022,10 @@
 .annotations-container {
   display: flex;
   flex-direction: column;
-  height: 91.5rem;
+  height: 86rem;
   width: 28rem;
+  margin-bottom: 10rem;
   padding: 0 10px;
-  overflow-y: scroll;
 }
 .annotations-container h2 {
   font-family: "Anta", serif;
@@ -975,14 +1034,20 @@
   font-size: 30px;
   letter-spacing: 2px;
   color: white;
-  margin-bottom: 5rem;
+  margin: 1rem 0rem 7.75rem 0rem;
   text-align: center;
 }
 .annotations-container ul {
   overflow-y: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  scroll-behavior: smooth;
   flex-grow: 1;
   border-radius: 8px;
   box-shadow: inset 0 5px 40px -15px rgba(0, 0, 0, 0.5), inset 0 -5px 40px -15px rgba(0, 0, 0, 0.5);
+}
+.annotations-container ul .annotations-container::-webkit-scrollbar {
+  display: none;
 }
 .annotations-container li {
   display: flex;
@@ -1056,10 +1121,11 @@
   border: none;
 }
 .annotations-container .textarea textarea {
+  position: absolute;
   padding: 0.5rem;
-  width: 100%;
-  height: 6rem;
-  margin-top: 0.7rem;
+  width: 26rem;
+  height: 8rem;
+  margin-top: 1rem;
   resize: none;
   border-radius: 8px;
   font-family: "Anta", serif;
@@ -1072,8 +1138,8 @@
 }
 .annotations-container .textarea button {
   position: absolute;
-  bottom: 1.5rem;
-  right: 1rem;
+  right: 1.25rem;
+  bottom: 1.75rem;
   background: none;
   border: none;
   cursor: pointer;

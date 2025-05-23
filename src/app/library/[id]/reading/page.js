@@ -26,6 +26,7 @@ export default function Reading() {
   const [bookmarkPage, setBookmarkPage] = useState(null);
   const [isBookDataLoaded, setIsBookDataLoaded] = useState(false);
   const annotationInputRef = useRef(null);
+  const annotationsListRef = useRef(null);
   const { id } = useParams();
   const [data, setData] = useState(null);
 
@@ -132,6 +133,11 @@ export default function Reading() {
       setAnnotations((prev) => [...prev, newAnnotation]);
       annotationInputRef.current.value = "";
 
+      requestAnimationFrame(() => {
+        annotationsListRef.current.scrollTop =
+          annotationsListRef.current.scrollHeight;
+      });
+
       await postAnnotationToDB(text, false);
     }
   };
@@ -230,6 +236,13 @@ export default function Reading() {
     setAnnotations((prev) => [...prev, newExtraction]);
     window.getSelection().removeAllRanges();
 
+    requestAnimationFrame(() => {
+      if (annotationsListRef.current) {
+        annotationsListRef.current.scrollTop =
+          annotationsListRef.current.scrollHeight;
+      }
+    });
+
     await postAnnotationToDB(selection, true);
   };
 
@@ -304,18 +317,7 @@ export default function Reading() {
                   contentEditable={isEditable}
                   suppressContentEditableWarning={true}
                   onBlur={handleTitleChange}
-                  style={
-                    isEditable
-                      ? {
-                          border: "2px solid #4a90e2",
-                          background: "rgba(255, 255, 255, 0.1)",
-                          backdropFilter: "blur(5px)",
-                          WebkitBackdropFilter: "blur(5px)",
-                          padding: "5px",
-                          borderRadius: "5px",
-                        }
-                      : {}
-                  }
+                  className={isEditable ? "editable-text" : ""}
                 >
                   {title}
                 </h1>
@@ -323,27 +325,12 @@ export default function Reading() {
                   contentEditable={isEditable}
                   suppressContentEditableWarning={true}
                   onBlur={handleAuthorChange}
-                  style={
-                    isEditable
-                      ? {
-                          border: "2px solid #4a90e2",
-                          background: "rgba(255, 255, 255, 0.1)",
-                          backdropFilter: "blur(5px)",
-                          WebkitBackdropFilter: "blur(5px)",
-                          padding: "5px",
-                          borderRadius: "5px",
-                        }
-                      : {}
-                  }
+                  className={isEditable ? "editable-text" : ""}
                 >
                   {author}
                 </h4>
                 {isEditable ? (
-                  <select
-                    value={category}
-                    onChange={handleCategoryChange}
-                    style={{ paddingLeft: "10px", width: "max-content" }}
-                  >
+                  <select value={category} onChange={handleCategoryChange}>
                     <option value="">Select Category</option>
                     <option value="adventure">Adventure</option>
                     <option value="biography">Biography</option>
@@ -440,7 +427,7 @@ export default function Reading() {
       {!zenMode && (
         <section className="annotations-container">
           <h2>Annotations</h2>
-          <ul>
+          <ul ref={annotationsListRef}>
             {annotations.map((annotation, index) => (
               <li
                 key={index}
@@ -452,12 +439,17 @@ export default function Reading() {
               >
                 <div className="annotation-text">
                   {annotation.isEditing && annotation.isEditable ? (
-                    <textarea
-                    value={annotation.text}
-                    onChange={(e) => updateAnnotation(index, e.target.value)}
-                    rows={Math.max(4, Math.max(annotation.text.split('\n').length, Math.ceil(annotation.text.length / 44)))}
-                    style={{ width: "100%", resize: "vertical" }}
-                  />
+                    <textarea className="editable-textarea"
+                      value={annotation.text}
+                      onChange={(e) => updateAnnotation(index, e.target.value)}
+                      rows={Math.max(
+                        4,
+                        Math.max(
+                          annotation.text.split("\n").length,
+                          Math.ceil(annotation.text.length / 44)
+                        )
+                      )}
+                    />
                   ) : (
                     annotation.text
                   )}
