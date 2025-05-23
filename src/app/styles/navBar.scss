@@ -63,3 +63,23 @@
   width: 35px;
   height: 35px;
 }
+
+.signed-in-background {
+  display: flex;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.1));
+  background: linear-gradient(90deg, #f2f0ef 25%, #fe9b27 50%, #f2f0ef 75%);
+  background-size: 200% 100%;
+  animation: anime 1.5s infinite linear;
+}
+
+@keyframes anime {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
