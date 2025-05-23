@@ -174,6 +174,15 @@ export default function Reading() {
     if (!annotation.isEditable) return;
 
     if (annotation.isEditing) {
+      if (annotation.text === annotation.originalText) {
+        setAnnotations(
+          annotations.map((a, i) =>
+            i === index ? { ...a, isEditing: false } : a
+          )
+        );
+
+        return;
+      }
       try {
         const res = await fetch("/api/updateComment", {
           method: "PUT",
@@ -198,7 +207,9 @@ export default function Reading() {
 
     setAnnotations(
       annotations.map((a, i) =>
-        i === index ? { ...a, isEditing: !a.isEditing } : a
+        i === index
+          ? { ...a, isEditing: !a.isEditing, originalText: a.text }
+          : a
       )
     );
   };
@@ -439,13 +450,16 @@ export default function Reading() {
               >
                 <div className="annotation-text">
                   {annotation.isEditing && annotation.isEditable ? (
-                    <textarea className="editable-textarea"
+                    <textarea
+                      className="editable-textarea"
                       value={annotation.text}
                       onChange={(e) => updateAnnotation(index, e.target.value)}
                       rows={Math.max(
                         4,
+
                         Math.max(
                           annotation.text.split("\n").length,
+
                           Math.ceil(annotation.text.length / 44)
                         )
                       )}
