@@ -48,14 +48,12 @@ function AboutUs() {
                 saved in our cloud database. Track your reading progress,
                 challenge yourself with weekly or monthly goals, and build a
                 personalized record of your literary adventures. With Read · Y,
-                effortless reading meets deeper engagement.
-                <p>
-                  We would highly appreciate your support, click{" "}
-                  <a target="_blank" href="https://contribee.com/free-lancers">
-                    here
-                  </a>{" "}
-                  to buy us a coffee!
-                </p>
+                effortless reading meets deeper engagement. We would highly
+                appreciate your support, click{" "}
+                <a target="_blank" href="https://contribee.com/free-lancers">
+                  here
+                </a>{" "}
+                to buy us a coffee!
               </p>
             </div>
             <img src="/assets/images/ReadY5.png" alt=""></img>

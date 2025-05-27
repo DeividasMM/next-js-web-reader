@@ -7,7 +7,9 @@ export default function Footer() {
           <ul>
             <h4>Support</h4>
             <li>
-              <a href="mailto:freelancersdevelopment@gmail.com">Found a bug?</a>
+              <a href="mailto:freelancersdevelopment@gmail.com?subject=Bug%20Report">
+                Found a bug?
+              </a>
             </li>
             <li>
               <a href="mailto:freelancersdevelopment@gmail.com">
