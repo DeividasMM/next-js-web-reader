@@ -62,13 +62,21 @@
   h2 {
     @include mixins.header-first-style;
     margin: 2rem;
+    margin-top: 3rem;
     white-space: nowrap;
+  }
+
+  p {
+    @include mixins.paragraphs;
+    margin: 0rem 4rem;
+    text-align: left;
+    margin-bottom: 2rem;
   }
 
   li {
     @include mixins.paragraphs;
-    list-style: none;
-    text-align: center;
+    list-style: square;
+    text-align: left;
     margin-bottom: 2rem;
     margin-left: 3rem;
     margin-right: 3rem;
@@ -91,6 +99,16 @@
     text-align: center;
     padding: 2rem;
     line-height: 2rem;
+  }
+
+  a {
+    @include mixins.paragraphs;
+    color: variables.$darker-white;
+
+    &:hover {
+      color: variables.$grey-white;
+      transition: 200ms ease-in-out;
+    }
   }
 }
 

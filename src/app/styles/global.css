@@ -111,7 +111,6 @@
   position: relative;
   top: 15px;
   left: 1rem;
-  width: 11rem;
   border-left: 2px dashed white;
   padding-left: 10px;
   z-index: 4;
@@ -127,6 +126,7 @@
 }
 .footer-info a {
   color: white;
+  text-decoration: underline;
   transition: ease-in-out 300ms;
 }
 .footer-info a:hover {
@@ -516,7 +516,19 @@
   letter-spacing: 2px;
   color: white;
   margin: 2rem;
+  margin-top: 3rem;
   white-space: nowrap;
+}
+.first-text-container p {
+  font-family: "Anta", serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 15px;
+  letter-spacing: 1px;
+  color: white;
+  margin: 0rem 4rem;
+  text-align: left;
+  margin-bottom: 2rem;
 }
 .first-text-container li {
   font-family: "Anta", serif;
@@ -525,8 +537,8 @@
   font-size: 15px;
   letter-spacing: 1px;
   color: white;
-  list-style: none;
-  text-align: center;
+  list-style: square;
+  text-align: left;
   margin-bottom: 2rem;
   margin-left: 3rem;
   margin-right: 3rem;
@@ -559,6 +571,19 @@
   text-align: center;
   padding: 2rem;
   line-height: 2rem;
+}
+.second-text-container a {
+  font-family: "Anta", serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 15px;
+  letter-spacing: 1px;
+  color: white;
+  color: rgb(228, 228, 228);
+}
+.second-text-container a:hover {
+  color: #797877;
+  transition: 200ms ease-in-out;
 }
 
 #about-container {
