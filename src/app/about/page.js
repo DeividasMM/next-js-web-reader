@@ -53,9 +53,11 @@ function AboutUs() {
                 volutpat consequat magna vel fringilla. Vivamus odio ipsum,
                 feugiat vitae nunc ac, ornare blandit est. Ut bibendum laoreet
                 dapibus. Nunc quis rhoncus nisl. Mauris lobortis iaculis nunc
-                euismod accumsan. We would highly appreciate your support, click
-                <a href="https://contribee.com/free-lancers"> here</a> to buy us
-                a coffee!
+                euismod accumsan. We would highly appreciate your support, click{" "}
+                <a target="_blank" href="https://contribee.com/free-lancers">
+                  here
+                </a>{" "}
+                to buy us a coffee!
               </p>
             </div>
             <img src="/assets/images/QR-code.png" alt=""></img>
