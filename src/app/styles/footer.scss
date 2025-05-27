@@ -53,7 +53,6 @@
     position: relative;
     top: 15px;
     left: 1rem;
-    width: 11rem;
     border-left: 2px dashed variables.$base-white;
     padding-left: 10px;
     z-index: 4;
@@ -64,6 +63,7 @@
   }
   a {
     color: variables.$base-white;
+    text-decoration: underline;
     transition: ease-in-out 300ms;
 
     &:hover {
