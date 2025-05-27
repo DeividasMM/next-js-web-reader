@@ -59,7 +59,11 @@ export default function Navigation() {
         </div>
 
         <div className="button-container">
-          <a href="/about" className="link">
+          <a
+            target="_blank"
+            href="https://contribee.com/free-lancers"
+            className="link"
+          >
             <FontAwesomeIcon icon={faCircleDollarToSlot} className="icon" />
             <span className="tooltip-text">Support Us</span>
           </a>
