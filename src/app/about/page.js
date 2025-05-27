@@ -38,7 +38,7 @@ function AboutUs() {
           </div>
           <div className="second-container">
             <div className="second-text-container">
-              <h2>Lorem ipsum dolor sit amet</h2>
+              <h2>More about Read · Y</h2>
               <p>
                 Read · Y is a sleek digital reading platform that turns every
                 page into an inspiring journey. Store and organize all your
