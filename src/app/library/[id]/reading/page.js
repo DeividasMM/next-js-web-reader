@@ -26,6 +26,7 @@ export default function Reading() {
   const [bookmarkPage, setBookmarkPage] = useState(null);
   const [isBookDataLoaded, setIsBookDataLoaded] = useState(false);
   const annotationInputRef = useRef(null);
+  const annotationsListRef = useRef(null);
   const { id } = useParams();
   const [data, setData] = useState(null);
 
@@ -132,6 +133,11 @@ export default function Reading() {
       setAnnotations((prev) => [...prev, newAnnotation]);
       annotationInputRef.current.value = "";
 
+      requestAnimationFrame(() => {
+        annotationsListRef.current.scrollTop =
+          annotationsListRef.current.scrollHeight;
+      });
+
       await postAnnotationToDB(text, false);
     }
   };
@@ -168,6 +174,16 @@ export default function Reading() {
     if (!annotation.isEditable) return;
 
     if (annotation.isEditing) {
+      if (annotation.text === annotation.originalText) {
+        setAnnotations(
+          annotations.map((a, i) =>
+            i === index ? { ...a, isEditing: false } : a
+          )
+        );
+
+        return;
+      }
+
       try {
         const res = await fetch("/api/updateComment", {
           method: "PUT",
@@ -192,7 +208,9 @@ export default function Reading() {
 
     setAnnotations(
       annotations.map((a, i) =>
-        i === index ? { ...a, isEditing: !a.isEditing } : a
+        i === index
+          ? { ...a, isEditing: !a.isEditing, originalText: a.text }
+          : a
       )
     );
   };
@@ -229,6 +247,13 @@ export default function Reading() {
 
     setAnnotations((prev) => [...prev, newExtraction]);
     window.getSelection().removeAllRanges();
+
+    requestAnimationFrame(() => {
+      if (annotationsListRef.current) {
+        annotationsListRef.current.scrollTop =
+          annotationsListRef.current.scrollHeight;
+      }
+    });
 
     await postAnnotationToDB(selection, true);
   };
@@ -303,14 +328,16 @@ export default function Reading() {
                 <h1
                   contentEditable={isEditable}
                   suppressContentEditableWarning={true}
-                  onInput={handleTitleChange}
+                  onBlur={handleTitleChange}
+                  className={isEditable ? "editable-text" : ""}
                 >
                   {title}
                 </h1>
                 <h4
                   contentEditable={isEditable}
                   suppressContentEditableWarning={true}
-                  onInput={handleAuthorChange}
+                  onBlur={handleAuthorChange}
+                  className={isEditable ? "editable-text" : ""}
                 >
                   {author}
                 </h4>
@@ -412,7 +439,7 @@ export default function Reading() {
       {!zenMode && (
         <section className="annotations-container">
           <h2>Annotations</h2>
-          <ul>
+          <ul ref={annotationsListRef}>
             {annotations.map((annotation, index) => (
               <li
                 key={index}
@@ -424,10 +451,20 @@ export default function Reading() {
               >
                 <div className="annotation-text">
                   {annotation.isEditing && annotation.isEditable ? (
-                    <input
-                      type="text"
+                    <textarea
+
+                      className="editable-textarea"
                       value={annotation.text}
                       onChange={(e) => updateAnnotation(index, e.target.value)}
+                      rows={Math.max(
+                        4,
+                        
+                        Math.max(
+                          annotation.text.split("\n").length,
+
+                          Math.ceil(annotation.text.length / 44)
+                        )
+                      )}
                     />
                   ) : (
                     annotation.text

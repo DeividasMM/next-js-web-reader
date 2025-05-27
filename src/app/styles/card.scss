@@ -31,12 +31,12 @@
       opacity: 1;
     }
     .content-box {
-        h3 {
-            color: variables.$base-black;
-        }
-        p {
-            color: variables.$base-black;
-        }
+      h3 {
+        color: variables.$base-black;
+      }
+      p {
+        color: variables.$base-black;
+      }
     }
     .delete-button {
       position: absolute;
@@ -55,18 +55,24 @@
 
     h3 {
       @include mixins.header-second-style;
-      text-transform: uppercase;
-      max-width: 20ch;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 5;
       overflow: hidden;
-      text-overflow: ellipsis;
-      margin-bottom: 10px;
+      text-transform: uppercase;
+      margin-bottom: 3rem;
       transition: ease-in-out 0.5s;
     }
 
     p {
       @include mixins.paragraphs;
-      margin-bottom: 10px;
+      position: absolute;
+      bottom: 5rem;
       transition: ease-in-out 0.5s;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 1;
+      overflow: hidden;
     }
   }
 

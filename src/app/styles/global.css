@@ -111,7 +111,6 @@
   position: relative;
   top: 15px;
   left: 1rem;
-  width: 11rem;
   border-left: 2px dashed white;
   padding-left: 10px;
   z-index: 4;
@@ -127,6 +126,7 @@
 }
 .footer-info a {
   color: white;
+  text-decoration: underline;
   transition: ease-in-out 300ms;
 }
 .footer-info a:hover {
@@ -214,6 +214,25 @@
   height: 35px;
 }
 
+.signed-in-background {
+  display: flex;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.1));
+  background: linear-gradient(90deg, #f2f0ef 25%, #fe9b27 50%, #f2f0ef 75%);
+  background-size: 200% 100%;
+  animation: anime 1.5s infinite linear;
+}
+
+@keyframes anime {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
 .main-container {
   position: relative;
   margin-top: 7rem;
@@ -418,6 +437,10 @@
   z-index: -1;
 }
 
+#main-container {
+  scroll-margin-top: 7.2rem;
+}
+
 .header-container img {
   width: 100%;
   height: 100vh;
@@ -493,7 +516,19 @@
   letter-spacing: 2px;
   color: white;
   margin: 2rem;
+  margin-top: 3rem;
   white-space: nowrap;
+}
+.first-text-container p {
+  font-family: "Anta", serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 15px;
+  letter-spacing: 1px;
+  color: white;
+  margin: 0rem 4rem;
+  text-align: left;
+  margin-bottom: 2rem;
 }
 .first-text-container li {
   font-family: "Anta", serif;
@@ -502,8 +537,8 @@
   font-size: 15px;
   letter-spacing: 1px;
   color: white;
-  list-style: none;
-  text-align: center;
+  list-style: square;
+  text-align: left;
   margin-bottom: 2rem;
   margin-left: 3rem;
   margin-right: 3rem;
@@ -537,6 +572,23 @@
   padding: 2rem;
   line-height: 2rem;
 }
+.second-text-container a {
+  font-family: "Anta", serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 15px;
+  letter-spacing: 1px;
+  color: white;
+  color: rgb(228, 228, 228);
+}
+.second-text-container a:hover {
+  color: #797877;
+  transition: 200ms ease-in-out;
+}
+
+#about-container {
+  scroll-margin-top: 0.2rem;
+}
 
 .scroll-icon {
   position: absolute;
@@ -546,6 +598,31 @@
   height: 3rem;
   transform: translate(-50%);
   color: white;
+  animation: bounce-7 2s infinite;
+}
+@keyframes bounce-7 {
+  0% {
+    transform: scale(1, 1) translateY(0);
+  }
+  10% {
+    transform: scale(1.1, 0.9) translateY(0);
+  }
+  30% {
+    transform: scale(0.9, 1.1) translateY(-15px);
+  }
+  50% {
+    transform: scale(1.05, 0.95) translateY(0);
+    color: #797877;
+  }
+  57% {
+    transform: scale(1, 1) translateY(-7px);
+  }
+  64% {
+    transform: scale(1, 1) translateY(0);
+  }
+  100% {
+    transform: scale(1, 1) translateY(0);
+  }
 }
 
 .input-selection-library {
@@ -621,6 +698,10 @@
   z-index: -1;
 }
 
+#books-container {
+  scroll-margin-top: 10.2rem;
+}
+
 .card {
   position: relative;
   width: 15rem;
@@ -676,11 +757,12 @@
   font-size: 20px;
   letter-spacing: 2px;
   color: white;
-  text-transform: uppercase;
-  max-width: 20ch;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 5;
   overflow: hidden;
-  text-overflow: ellipsis;
-  margin-bottom: 10px;
+  text-transform: uppercase;
+  margin-bottom: 3rem;
   transition: ease-in-out 0.5s;
 }
 .card .content-box p {
@@ -690,8 +772,13 @@
   font-size: 15px;
   letter-spacing: 1px;
   color: white;
-  margin-bottom: 10px;
+  position: absolute;
+  bottom: 5rem;
   transition: ease-in-out 0.5s;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
 }
 .card .reading-link {
   left: 2rem;
@@ -735,9 +822,8 @@
   flex-direction: row;
   width: 90rem;
   position: relative;
-  left: 65%;
-  margin: 5rem 0rem;
-  transform: translate(-65%);
+  left: 7%;
+  transform: scale(0.9);
 }
 
 #main-section {
@@ -753,7 +839,7 @@
 
 .header-text-container {
   margin-left: 1rem;
-  width: 25rem;
+  width: 35rem;
 }
 .header-text-container h1 {
   font-family: "Anta", serif;
@@ -771,7 +857,7 @@
   font-size: 20px;
   letter-spacing: 2px;
   color: white;
-  margin: 15px 0px;
+  margin: 1rem 0rem 1.5rem 0rem;
   width: 100%;
 }
 .header-text-container p {
@@ -782,6 +868,18 @@
   letter-spacing: 1px;
   color: white;
   width: 100%;
+}
+.header-text-container .editable-text {
+  /* From https://css.glass */
+  background: rgba(255, 255, 255, 0.27);
+  border-radius: 8px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(3.5px);
+  -webkit-backdrop-filter: blur(3.5px);
+  border: 2px solid white;
+  padding: 5px 10px;
+  margin: 0.5rem 0rem;
+  border: 2px solid skyblue;
 }
 .header-text-container select {
   /* From https://css.glass */
@@ -799,8 +897,9 @@
   color: white;
   width: 10rem;
   height: 2rem;
-  text-align: center;
   transition: ease-in-out 100ms;
+  width: max-content;
+  padding: 0rem 2rem;
 }
 .header-text-container select:hover {
   color: rgb(228, 228, 228);
@@ -810,6 +909,27 @@
 .header-text-container select option {
   color: black;
   background-color: rgb(242, 240, 239);
+}
+
+.editable-textarea {
+  width: 100%;
+  resize: vertical;
+  /* From https://css.glass */
+  background: rgba(255, 255, 255, 0.27);
+  border-radius: 8px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(3.5px);
+  -webkit-backdrop-filter: blur(3.5px);
+  border: 2px solid white;
+  border: 2px solid #797877;
+  font-family: "Anta", serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 15px;
+  letter-spacing: 1px;
+  color: white;
+  color: #191919;
+  padding: 5px;
 }
 
 .reading-button-container {
@@ -927,10 +1047,10 @@
 .annotations-container {
   display: flex;
   flex-direction: column;
-  height: 91.5rem;
+  height: 86rem;
   width: 28rem;
+  margin-bottom: 10rem;
   padding: 0 10px;
-  overflow-y: scroll;
 }
 .annotations-container h2 {
   font-family: "Anta", serif;
@@ -939,14 +1059,20 @@
   font-size: 30px;
   letter-spacing: 2px;
   color: white;
-  margin-bottom: 5rem;
+  margin: 1rem 0rem 7.75rem 0rem;
   text-align: center;
 }
 .annotations-container ul {
   overflow-y: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  scroll-behavior: smooth;
   flex-grow: 1;
   border-radius: 8px;
   box-shadow: inset 0 5px 40px -15px rgba(0, 0, 0, 0.5), inset 0 -5px 40px -15px rgba(0, 0, 0, 0.5);
+}
+.annotations-container ul .annotations-container::-webkit-scrollbar {
+  display: none;
 }
 .annotations-container li {
   display: flex;
@@ -1020,10 +1146,11 @@
   border: none;
 }
 .annotations-container .textarea textarea {
+  position: absolute;
   padding: 0.5rem;
-  width: 100%;
-  height: 6rem;
-  margin-top: 0.7rem;
+  width: 26rem;
+  height: 8rem;
+  margin-top: 1rem;
   resize: none;
   border-radius: 8px;
   font-family: "Anta", serif;
@@ -1036,8 +1163,8 @@
 }
 .annotations-container .textarea button {
   position: absolute;
-  bottom: 1.5rem;
-  right: 1rem;
+  right: 1.25rem;
+  bottom: 1.75rem;
   background: none;
   border: none;
   cursor: pointer;
@@ -1140,6 +1267,10 @@
   color: white;
   background-color: var(--light-bg);
   transition: background-color 0.3s;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {

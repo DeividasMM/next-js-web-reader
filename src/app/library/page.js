@@ -64,11 +64,13 @@ export default function Library() {
       <div className="container">
         <div className="header-container">
           <h1>Your Library</h1>
+          <a href="#books-container">
           <FontAwesomeIcon icon={faChevronDown} className="scroll-icon" />
+          </a>
           <img src="/assets/images/banner8.png" alt=""></img>
         </div>
 
-        <div className="books-container">
+        <div className="books-container" id="books-container">
           {books.map((item) => (
             <Card
               key={item.pdf_id}

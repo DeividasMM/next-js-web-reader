@@ -9,7 +9,11 @@ export default function Footer() {
             <li>
               <a href="mailto:freelancersdevelopment@gmail.com">Found a bug?</a>
             </li>
-            <li>freelancersdevelopment@gmail.com</li>
+            <li>
+              <a href="mailto:freelancersdevelopment@gmail.com">
+                Freelancersdevelopment@gmail.com
+              </a>
+            </li>
             <li>Vilnius</li>
           </ul>
         </div>
