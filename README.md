@@ -18,6 +18,6 @@ turso db shell freelancers
 
 # Run the style using SCSS
 
-To start SCSS compile to regular CSS just run this command in your command line or IDEA terminal.
+To start SCSS compile to regular CSS just run this command in your command line or IDE terminal.
 
 "sass --watch src/app/styles/main.scss:src/app/styles/global.css"
