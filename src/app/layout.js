@@ -1,4 +1,4 @@
-import "/src/app/styles/global.css";
+import "./styles/main.scss";
 import Navigation from "./navigation";
 import Footer from "./footer";
 
