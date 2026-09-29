@@ -28,13 +28,11 @@ export default function Reading() {
   const annotationInputRef = useRef(null);
   const annotationsListRef = useRef(null);
   const { id } = useParams();
-  const [data, setData] = useState(null);
 
   useEffect(() => {
     async function getBook() {
       const res = await fetch(`/api/getBook?id=${id}`);
       const data = await res.json();
-      setData(data);
 
       if (data.title) setTitle(data.title);
       if (data.author) setAuthor(data.author);
@@ -105,7 +103,6 @@ export default function Reading() {
       }
 
       setIsEditable(false);
-      const data = await response.json();
     } catch (error) {
       console.error("Error updating book:", error);
     }
@@ -452,13 +449,12 @@ export default function Reading() {
                 <div className="annotation-text">
                   {annotation.isEditing && annotation.isEditable ? (
                     <textarea
-
                       className="editable-textarea"
                       value={annotation.text}
                       onChange={(e) => updateAnnotation(index, e.target.value)}
                       rows={Math.max(
                         4,
-                        
+
                         Math.max(
                           annotation.text.split("\n").length,
 

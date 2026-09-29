@@ -1,0 +1,15 @@
+# Normalize line endings to LF on every OS (Prettier enforces "lf").
+* text=auto eol=lf
+
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.webp binary
+*.m4v binary
+*.mp4 binary
+*.pdf binary
+*.woff binary
+*.woff2 binary
+*.db binary
