@@ -29,8 +29,9 @@ Open work for Read · Y. The rules (also in CLAUDE.md §10):
       `npm run db:migrate` against it.
 - [ ] **Upgrade to Next.js 16 and Clerk Core 3.** `middleware.js` becomes
       `proxy.js` and `next lint` is removed. `@clerk/clerk-react` (a transitive
-      dependency) is deprecated. This also clears the `postcss` advisory from
-      `npm audit`, which comes through Next.
+      dependency) is deprecated. Also remove `overrides.next.postcss` from
+      `package.json`: it forces Next 15's pinned `postcss@8.4.31` up to a
+      patched 8.5.x, and Next 16 already ships a fixed version.
 - [ ] **TypeScript migration (discuss).** Decide before the redesign starts,
       because migrating afterwards costs more.
 
