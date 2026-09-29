@@ -319,6 +319,9 @@ A change is done when all of these hold:
   `vitest.config.mjs` (don't remove them).
 - **Stray lockfiles:** `next.config.mjs` pins `outputFileTracingRoot` because a
   `package-lock.json` in a parent folder confuses Next's root detection.
+- **No I/O at import time in server modules.** `next build` imports every route
+  while collecting page data, when no database may exist yet (e.g. in CI). This
+  is why `src/lib/turso.js` creates its client on the first query.
 - **Base64 PDFs:** every `getBook` and `getLibrary` response carries whole files.
   Keep this in mind for performance work (see task.md).
 - **`next lint` is deprecated** in Next 15.5 and removed in 16. Use `npm run lint`.
