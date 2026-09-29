@@ -90,6 +90,9 @@ everything "works".
 2. Talk to the team in **Lithuanian** (English is fine too). **Never use Russian.**
    Code, comments, commit messages, PRs and docs are written in **English**.
 3. AI agents commit, push or open PRs **only when asked**.
+4. **No AI attribution, ever.** Commits, PRs and code never contain
+   `Co-Authored-By` trailers for AI tools, "Generated with …" footers or
+   similar lines. The authors are the people on the team.
 
 ---
 
