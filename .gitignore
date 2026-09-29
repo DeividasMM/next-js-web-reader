@@ -42,3 +42,9 @@ next-env.d.ts
 
 # clerk configuration (can include secrets)
 /.clerk/
+
+# env template is safe to commit
+!.env.example
+
+# local libSQL database (npm run db:migrate)
+/.data/

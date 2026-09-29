@@ -6,6 +6,9 @@ import { auth } from "@clerk/nextjs/server";
 export async function GET() {
   try {
     const { userId } = await auth();
+    if (!userId) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
 
     const result = await turso.execute({
       sql: `SELECT * FROM pdfs WHERE user_id = ?`,

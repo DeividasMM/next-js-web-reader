@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faDownload,
@@ -31,31 +32,31 @@ export default function Navigation() {
         </SignedIn>
 
         <div className="button-container">
-          <a href="/" className="link">
+          <Link href="/" className="link">
             <FontAwesomeIcon icon={faHome} className="icon" />
             <span className="tooltip-text">Home</span>
-          </a>
+          </Link>
         </div>
 
         <div className="button-container">
-          <a href="/upload" className="link">
+          <Link href="/upload" className="link">
             <FontAwesomeIcon icon={faDownload} className="icon" />
             <span className="tooltip-text">Upload</span>
-          </a>
+          </Link>
         </div>
 
         <div className="button-container">
-          <a href="/library" className="link">
+          <Link href="/library" className="link">
             <FontAwesomeIcon icon={faBookOpen} className="icon" />
             <span className="tooltip-text">Library</span>
-          </a>
+          </Link>
         </div>
 
         <div className="button-container">
-          <a href="/about" className="link">
+          <Link href="/about" className="link">
             <FontAwesomeIcon icon={faCircleInfo} className="icon" />
             <span className="tooltip-text">About Us</span>
-          </a>
+          </Link>
         </div>
 
         <div className="button-container">

@@ -28,7 +28,8 @@ body::before {
   left: -20px;
   right: -20px;
   bottom: -20px;
-  background: radial-gradient(
+  background:
+    radial-gradient(
       circle farthest-corner at 50% 100%,
       #cccccced 0% 18%,
       #8c8c8ced 18%,

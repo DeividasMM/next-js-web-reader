@@ -14,13 +14,26 @@ export async function POST(req) {
       return NextResponse.json({ error: "Missing fields" }, { status: 400 });
     }
 
+    // INSERT ... SELECT so the note is only written when the PDF belongs to the user.
     const result = await turso.execute({
       sql: `
         INSERT INTO notes (pdf_id, content, isExtraction, bookmark_page, created_at)
-        VALUES (?, ?, ?, ?, datetime('now'))
+        SELECT pdf_id, ?, ?, ?, datetime('now')
+        FROM pdfs
+        WHERE pdf_id = ? AND user_id = ?
       `,
-      args: [pdf_id, content, isExtraction ? 1 : 0, bookmark_page],
+      args: [
+        content,
+        isExtraction ? 1 : 0,
+        bookmark_page ?? null,
+        pdf_id,
+        userId,
+      ],
     });
+
+    if (result.rowsAffected === 0) {
+      return NextResponse.json({ error: "PDF not found" }, { status: 404 });
+    }
 
     return NextResponse.json({ message: "Note saved" }, { status: 201 });
   } catch (error) {
