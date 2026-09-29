@@ -16,7 +16,9 @@
   @include mixins.paragraphs;
   @include mixins.glassmorphism;
   white-space: nowrap;
-  transition: transform 0.3s ease-in-out, opacity 0.4s;
+  transition:
+    transform 0.3s ease-in-out,
+    opacity 0.4s;
 }
 
 .link:hover .tooltip-text {
