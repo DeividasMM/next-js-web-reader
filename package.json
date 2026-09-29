@@ -57,5 +57,10 @@
       "prettier --write"
     ],
     "*.{json,md,scss,css,yml,yaml}": "prettier --write"
+  },
+  "overrides": {
+    "next": {
+      "postcss": "^8.5.23"
+    }
   }
 }
