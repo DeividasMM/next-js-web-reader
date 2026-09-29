@@ -1,6 +1,5 @@
 "use client";
 
-import { useUser } from "@clerk/nextjs";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useDropzone } from "react-dropzone";
@@ -12,7 +11,6 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 export default function Upload() {
-  const { user } = useUser();
   const [file, setFile] = useState(null);
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
@@ -64,7 +62,7 @@ export default function Upload() {
         genre: selectedOption,
       };
 
-      const response = await fetch("http://localhost:3000/api/postUpload", {
+      const response = await fetch("/api/postUpload", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

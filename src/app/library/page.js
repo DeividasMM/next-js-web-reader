@@ -31,7 +31,7 @@ export default function Library() {
   useEffect(() => {
     async function getData() {
       try {
-        const response = await fetch("http://localhost:3000/api/getLibrary");
+        const response = await fetch("/api/getLibrary");
         if (response.ok) {
           const data = await response.json();
           console.log(data);
@@ -65,7 +65,7 @@ export default function Library() {
         <div className="header-container">
           <h1>Your Library</h1>
           <a href="#books-container">
-          <FontAwesomeIcon icon={faChevronDown} className="scroll-icon" />
+            <FontAwesomeIcon icon={faChevronDown} className="scroll-icon" />
           </a>
           <img src="/assets/images/banner8.png" alt=""></img>
         </div>
